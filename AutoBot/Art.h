@@ -2,7 +2,6 @@
 #define ART_H_INCLUDED
 
 #include "res/wx.xpm"
-
 #include "res/Rect.xpm"
 #include "res/Tool.xpm"
 #include "res/RoundRect.xpm"
