@@ -18,6 +18,8 @@
 #include "wxsf/ShapeCanvas.h"
 #include "wxsf/CommonFcn.h"
 
+using namespace wxSFCommonFcn;
+
 XS_IMPLEMENT_CLONABLE_CLASS(wxSFEllipseShape, wxSFRectShape);
 
 wxSFEllipseShape::wxSFEllipseShape(void)
@@ -56,7 +58,7 @@ wxRealPoint wxSFEllipseShape::GetBorderPoint(const wxRealPoint& start, const wxR
     return wxSFRectShape::GetBorderPoint(start, end);
 }
 
-bool wxSFEllipseShape::IsInside(const wxPoint& pos)
+bool wxSFEllipseShape::Contains(const wxPoint& pos)
 {
     // HINT: overload it for custom actions...
 

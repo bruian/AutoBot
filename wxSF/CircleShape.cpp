@@ -18,6 +18,8 @@
 #include "wxsf/CommonFcn.h"
 #include "wxsf/ShapeCanvas.h"
 
+using namespace wxSFCommonFcn;
+
 XS_IMPLEMENT_CLONABLE_CLASS(wxSFCircleShape, wxSFSquareShape);
 
 wxSFCircleShape::wxSFCircleShape(void)
@@ -63,7 +65,7 @@ wxRealPoint wxSFCircleShape::GetBorderPoint(const wxRealPoint& start, const wxRe
 
 }
 
-bool wxSFCircleShape::IsInside(const wxPoint& pos)
+bool wxSFCircleShape::Contains(const wxPoint& pos)
 {
     wxRealPoint center = GetAbsolutePosition() + wxRealPoint(m_nRectSize.x/2, m_nRectSize.y/2);
 

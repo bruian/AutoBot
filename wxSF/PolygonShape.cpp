@@ -18,6 +18,8 @@
 #include "wxsf/CommonFcn.h"
 #include "wxsf/ShapeCanvas.h"
 
+using namespace wxSFCommonFcn;
+
 XS_IMPLEMENT_CLONABLE_CLASS(wxSFPolygonShape, wxSFRectShape);
 
 wxSFPolygonShape::wxSFPolygonShape(void)

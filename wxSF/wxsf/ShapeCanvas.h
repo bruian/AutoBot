@@ -297,7 +297,7 @@ public:
      * \return Pointer to diagram manager
      * \sa wxSFDiagramManager
      */
-    wxSFDiagramManager* GetDiagramManager(){return m_pManager;}
+    inline wxSFDiagramManager* GetDiagramManager() { return m_pManager; }
     /*!
      * \brief Set diagram manager for this shape canvas
      * \param manager Pointer to diagram manager instance
@@ -477,27 +477,21 @@ public:
 	/*!
 	 * \brief Get list of all shapes located at given position
 	 * \param pos Logical position
-	 * \param shapes Reference to shape list where pointers to
-	 * all found shapes will be stored
-	 * \return Number of found shapes
+	 * \param shapes Reference to shape list where pointers to all found shapes will be stored
 	 * \sa wxSFShapeCanvas::DP2LP
 	 */
-	int GetShapesAtPosition(const wxPoint& pos, ShapeList& shapes);
+	void GetShapesAtPosition(const wxPoint& pos, ShapeList& shapes);
 	/*!
 	 * \brief Get list of shapes located inside given rectangle
 	 * \param rct Examined rectangle
-	 * \param shapes Reference to shape list where pointers to
-	 * all found shapes will be stored
-	 * \return Number of found shapes
+	 * \param shapes Reference to shape list where pointers to all found shapes will be stored
 	 */
-	int GetShapesInside(const wxRect& rct, ShapeList& shapes);
+	void GetShapesInside(const wxRect& rct, ShapeList& shapes);
 	/*!
 	 * \brief Get list of selected shapes.
-	 * \param selection Reference to shape list where pointers to
-	 * all selected shapes will be stored
-	 * \return Number of selected shapes
+	 * \param selection Reference to shape list where pointers to all selected shapes will be stored
 	 */
-	int GetSelectedShapes(ShapeList& selection);
+	void GetSelectedShapes(ShapeList& selection);
     /*!
 	 * \brief Get box bounding all shapes in the canvas.
 	 * \return Total bounding box
@@ -508,7 +502,11 @@ public:
      * \return Selection bounding box
      */
 	wxRect GetSelectionBB();
+
+	//bruian add - begin
 	wxSFShapeHandle *GetSelectedHandle() { return m_pSelectedHandle; }
+	//bruian add - end
+
 	/*!
 	 * \brief Align selected shapes in given directions.
 	 *
@@ -525,123 +523,123 @@ public:
      * \param style Combination of the canvas styles
      * \sa STYLE
      */
-    inline void SetStyle(long style){m_Settings.m_nStyle = style;}
+    inline void SetStyle(long style) { m_Settings.m_nStyle = style; }
     /*! \brief Get current canvas style. */
-    inline long GetStyle(){return m_Settings.m_nStyle;}
+    inline long GetStyle() const { return m_Settings.m_nStyle; }
 	/*! \brief Add new style flag. */
-    inline void AddStyle(STYLE style){m_Settings.m_nStyle |= style;}
+    inline void AddStyle(STYLE style) { m_Settings.m_nStyle |= style; }
 	/*! \brief Remove given style flag. */
-    inline void RemoveStyle(STYLE style){m_Settings.m_nStyle &= ~style;}
+    inline void RemoveStyle(STYLE style) { m_Settings.m_nStyle &= ~style; }
 	/*! \brief Check whether given style flag is used. */
-    inline bool ContainsStyle(STYLE style){return (m_Settings.m_nStyle & style) != 0;}
+    inline bool ContainsStyle(STYLE style) const { return (m_Settings.m_nStyle & style) != 0; }
 
 	// public members accessors
 	/*!
 	 * \brief Set canvas background color.
 	 * \param col Background color
 	 */
-	void SetCanvasColour(const wxColour& col){m_Settings.m_nBackgroundColor = col;}
+	inline void SetCanvasColour(const wxColour& col) { m_Settings.m_nBackgroundColor = col; }
 	/*!
 	 * \brief Get canvas background color.
 	 * \return Background color
 	 */
-	wxColour GetCanvasColour() const {return m_Settings.m_nBackgroundColor;}
+	inline wxColour GetCanvasColour() const { return m_Settings.m_nBackgroundColor; }
 	/*!
 	 * \brief Set starting gradient color.
 	 * \param col Color
 	 */
-	void SetGradientFrom(const wxColour& col){m_Settings.m_nGradientFrom = col;}
+	inline void SetGradientFrom(const wxColour& col) { m_Settings.m_nGradientFrom = col; }
 	/*!
 	 * \brief Get starting gradient color.
 	 * \return Color
 	 */
-	wxColour GetGradientFrom() const {return m_Settings.m_nGradientFrom;}
+	inline wxColour GetGradientFrom() const { return m_Settings.m_nGradientFrom; }
 	/*!
 	 * \brief Set ending gradient color.
 	 * \param col Color
 	 */
-	void SetGradientTo(const wxColour& col){m_Settings.m_nGradientTo = col;}
+	inline void SetGradientTo(const wxColour& col) { m_Settings.m_nGradientTo = col; }
 	/*!
 	 * \brief Get ending gradient color.
 	 * \return Color
 	 */
-	wxColour GetGradientTo() const {return m_Settings.m_nGradientTo;}
+	inline wxColour GetGradientTo() const { return m_Settings.m_nGradientTo; }
 	/*!
 	 * \brief Get grid size.
 	 * \return Grid size
 	 */
-	wxSize GetGrid() const {return m_Settings.m_nGridSize;}
+	inline wxSize GetGrid() const { return m_Settings.m_nGridSize; }
 	/*!
 	 * \brief Set grid size.
 	 * \param grid Grid size
 	 */
-	void SetGrid(wxSize grid){m_Settings.m_nGridSize = grid;}
+	inline void SetGrid(wxSize grid) { m_Settings.m_nGridSize = grid; }
 	/*!
 	 * \brief Set grid color.
 	 * \param col Grid color
 	 */
-	void SetGridColour(const wxColour& col){m_Settings.m_nGridColor = col;}
+	inline void SetGridColour(const wxColour& col) { m_Settings.m_nGridColor = col; }
 	/*!
 	 * \brief Get grid color.
 	 * \return Grid color
 	 */
-	wxColour GetGridColour() const {return m_Settings.m_nGridColor;}
+	inline wxColour GetGridColour() const { return m_Settings.m_nGridColor; }
 	/*!
 	 * \brief Set shadow offset.
 	 * \param offset Shadow offset
 	 */
-	void SetShadowOffset(const wxRealPoint& offset){m_Settings.m_nShadowOffset = offset;}
+	inline void SetShadowOffset(const wxRealPoint& offset) { m_Settings.m_nShadowOffset = offset; }
 	/*!
 	 * \brief Get shadow offset.
 	 * \return Shadow offset
 	 */
-	wxRealPoint GetShadowOffset() const {return m_Settings.m_nShadowOffset;}
+	inline wxRealPoint GetShadowOffset() const { return m_Settings.m_nShadowOffset; }
 	/*!
 	 * \brief Set shadow fill (used for shadows of non-text shapes only).
 	 * \param brush Reference to brush object
 	 */
-	void SetShadowFill(const wxBrush& brush){m_Settings.m_ShadowFill = brush;}
+	inline void SetShadowFill(const wxBrush& brush) { m_Settings.m_ShadowFill = brush; }
 	/*!
 	 * \brief Get shadow fill.
 	 * \return Current shadow brush
 	 */
-	wxBrush GetShadowFill() const {return m_Settings.m_ShadowFill;}
+	inline wxBrush GetShadowFill() const { return m_Settings.m_ShadowFill; }
 	/*!
 	 * \brief Set horizontal align of printed drawing.
 	 * \param val Horizontal align
 	 * \sa HALIGN
 	 */
-	void SetPrintHAlign(HALIGN val){m_Settings.m_nPrintHAlign = (int)val;}
+	inline void SetPrintHAlign(HALIGN val) { m_Settings.m_nPrintHAlign = (int)val; }
 	/*!
 	 * \brief Get horizontal align of printed drawing.
 	 * \return Current horizontal align
 	 * \sa HALIGN
 	 */
-	HALIGN GetPrintHAlign() const {return (HALIGN)m_Settings.m_nPrintHAlign;}
+	inline HALIGN GetPrintHAlign() const { return (HALIGN)m_Settings.m_nPrintHAlign; }
 	/*!
 	 * \brief Set vertical align of printed drawing.
 	 * \param val Verical align
 	 * \sa VALIGN
 	 */
-	void SetPrintVAlign(VALIGN val){m_Settings.m_nPrintVAlign = (int)val;}
+	inline void SetPrintVAlign(VALIGN val) { m_Settings.m_nPrintVAlign = (int)val; }
 	/*!
 	 * \brief Get vertical align of printed drawing.
 	 * \return Current vertical align
 	 * \sa VALIGN
 	 */
-	VALIGN GetPrintVAlign() const {return (VALIGN)m_Settings.m_nPrintVAlign;}
+	inline VALIGN GetPrintVAlign() const { return (VALIGN)m_Settings.m_nPrintVAlign; }
 	/*!
 	 * \brief Set printing mode for this canvas.
 	 * \param mode Printing mode
 	 * \sa PRINTMODE
 	 */
-	void SetPrintMode(PRINTMODE mode){m_Settings.m_nPrintMode = (int)mode;}
+	inline void SetPrintMode(PRINTMODE mode) { m_Settings.m_nPrintMode = (int)mode; }
 	/*!
 	 * \brief Get printing mode for this canvas.
 	 * \return Current printing mode
 	 * \sa PRINTMODE
 	 */
-	PRINTMODE GetPrintMode() const {return (PRINTMODE)m_Settings.m_nPrintMode;}
+	inline PRINTMODE GetPrintMode() const { return (PRINTMODE)m_Settings.m_nPrintMode; }
 	/*!
 	 * \brief Set canvas scale.
 	 * \param scale Scale value
@@ -651,11 +649,16 @@ public:
 	 * \brief Get the canvas scale.
 	 * \return Canvas scale
 	 */
-	double GetScale(){return m_Settings.m_nScale;}
+	inline double GetScale() const { return m_Settings.m_nScale; }
 	/*!
 	 * \brief Set the canvas scale so a whole diagram is visible.
 	 */
 	void SetScaleToViewAll();
+	/**
+	 * \brief Scroll the shape canvas so the given shape will be located in its center.
+	 * \param shape Pointer to focused shape
+	 */
+	void ScrollToShape(wxSFShapeBase* shape);
 	/*!
 	 * \brief Enable usage of wxGraphicsContext for drawing (if supported).
 	 * \param enab If TRUE then the wxGraphicsContext will be used
@@ -665,14 +668,14 @@ public:
 	 * \brief Function returns information whether the wxGraphicsContext is enabled (if supported).
 	 * \return TRUE if the wxGraphicsContext is enabled
 	 */
-    static bool IsGCEnabled(){return m_fEnableGC;}
+    static bool IsGCEnabled() { return m_fEnableGC; }
 
 	/*!
 	 * \brief Get canvas workind mode.
 	 * \return Working mode
 	 * \sa MODE
 	 */
-	MODE GetMode(){return m_nWorkingMode;}
+	inline MODE GetMode() const { return m_nWorkingMode; }
 	/*!
 	 * \brief Set default hover color.
 	 * \param col Hover color.
@@ -682,13 +685,13 @@ public:
 	 * \brief Get default hover color.
 	 * \return Hover color
 	 */
-	wxColour GetHoverColour() const {return m_Settings.m_nCommonHoverColor;}
+	inline wxColour GetHoverColour() const { return m_Settings.m_nCommonHoverColor; }
 	/*!
 	 * \brief Get canvas hostory manager.
 	 * \return Reference to the canvas history manager
 	 * \sa wxSFCanvasHistory
 	 */
-	wxSFCanvasHistory& GetHistoryManager(){return m_CanvasHistory;}
+	inline wxSFCanvasHistory& GetHistoryManager() { return m_CanvasHistory; }
 
 	/*!
 	 * \brief Update given position so it will fit canvas grid (if enabled).
@@ -719,11 +722,14 @@ public:
      * \brief Get reference to multiselection box
      * \return Reference to multiselection box object
      */
-    wxSFMultiSelRect& GetMultiselectionBox(){return m_shpMultiEdit;}
+    inline wxSFMultiSelRect& GetMultiselectionBox() { return m_shpMultiEdit; }
+
+	/*! \brief Close and delete all opened text editing controls actualy used by editable text shapes */
+	void DeleteAllTextCtrls();
 
 	// public virtual event handlers
     /*!
-     * \brief Event handler call when the canvas is clicked by
+     * \brief Event handler called when the canvas is clicked by
 	 * the left mouse button. The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -735,7 +741,7 @@ public:
      */
 	virtual void OnLeftDown(wxMouseEvent& event);
     /*!
-     * \brief Event handler call when the canvas is double-clicked by
+     * \brief Event handler called when the canvas is double-clicked by
 	 * the left mouse button. The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -747,7 +753,7 @@ public:
      */
 	virtual void OnLeftDoubleClick(wxMouseEvent& event);
     /*!
-     * \brief Event handler call when the left mouse button is released.
+     * \brief Event handler called when the left mouse button is released.
      * The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -759,7 +765,7 @@ public:
      */
 	virtual void OnLeftUp(wxMouseEvent& event);
     /*!
-     * \brief Event handler call when the canvas is clicked by
+     * \brief Event handler called when the canvas is clicked by
 	 * the right mouse button. The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -771,7 +777,7 @@ public:
      */
 	virtual void OnRightDown(wxMouseEvent& event);
     /*!
-     * \brief Event handler call when the canvas is double-clicked by
+     * \brief Event handler called when the canvas is double-clicked by
 	 * the right mouse button. The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -783,7 +789,7 @@ public:
      */
 	virtual void OnRightDoubleClick(wxMouseEvent& event);
     /*!
-     * \brief Event handler call when the right mouse button is released.
+     * \brief Event handler called when the right mouse button is released.
      * The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -795,7 +801,7 @@ public:
      */
 	virtual void OnRightUp(wxMouseEvent& event);
     /*!
-     * \brief Event handler call when the mouse pointer is moved.
+     * \brief Event handler called when the mouse pointer is moved.
      * The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -807,7 +813,7 @@ public:
      */
 	virtual void OnMouseMove(wxMouseEvent& event);
     /*!
-     * \brief Event handler call when any key is pressed.
+     * \brief Event handler called when any key is pressed.
      * The function can be overrided if necessary.
      *
      * The function is called by the framework and provides basic functionality
@@ -820,7 +826,7 @@ public:
 	virtual void OnKeyDown(wxKeyEvent& event);
 
     /*!
-     * \brief Event handler call when any editable text shape is changed.
+     * \brief Event handler called when any editable text shape is changed.
      * The function can be overrided if necessary.
 	 * The function is called by the framework and its default implementation
      * generates wxEVT_SF_TEXT_CHANGE event.
@@ -885,6 +891,8 @@ private:
 	/*! \brief Custom data format object (used for the clipboard and D&D operations */
 	wxDataFormat m_formatShapes;
 
+	wxPoint m_nPrevMousePos;
+
 	/*! \brief Canvas history manager */
 	wxSFCanvasHistory m_CanvasHistory;
 
@@ -907,43 +915,45 @@ private:
 
 	// private functions
 
-	/*! \brief Close and delete all opened text editing controls actualy used by editable text shapes */
-	void DeleteAllTextCtrls();
 	/*! \brief Validate selection so the shapes in the given list can be processed by the clipboard functions */
-	void ValidateSelectionForClipboard(ShapeList& list);
-//	/*! \brief Create wxMemoryBuffer from given wxString */
-//	wxMemoryBuffer CreateMembufferFromString(const wxString& str);
+	void ValidateSelectionForClipboard(ShapeList& selection);
+	/*! \brief Append connections assigned to shapes in given list to this list as well */
+	void AppendAssignedConnections(wxSFShapeBase *shape, ShapeList& selection, bool childrenonly);
 	/*! \brief Initialize printing framework */
 	void InitializePrinting();
 	/*! \brief Deinitialize prnting framework */
 	void DeinitializePrinting();
+	/*! \brief Remove given shape for temporary conatiners */
+	void RemoveFromTemporaries(wxSFShapeBase *shape);
+	/*! \brief Assign give shape to parent at given location (if exists) */
+	void ReparentShape(wxSFShapeBase *shape, const wxPoint& parentpos);
 
 	// private event handlers
 	/*!
 	 * \brief Event handler called when the canvas should be repainted.
 	 * \param event Paint event
 	 */
-	void OnPaint(wxPaintEvent& event);
+	void _OnPaint(wxPaintEvent& event);
 	/*!
 	 * \brief Event handler called when the canvas should be erased.
 	 * \param event Erase event
 	 */
-	void OnEraseBackground(wxEraseEvent& event);
+	void _OnEraseBackground(wxEraseEvent& event);
 	/*!
 	 * \brief Event handler called when the mouse pointer leaves the canvas window.
 	 * \param event Mouse event
 	 */
-	void OnLeaveWindow(wxMouseEvent& event);
+	void _OnLeaveWindow(wxMouseEvent& event);
 	/*!
 	 * \brief Event handler called when the mouse pointer enters the canvas window.
 	 * \param event Mouse event
 	 */
-	void OnEnterWindow(wxMouseEvent& event);
+	void _OnEnterWindow(wxMouseEvent& event);
 	/*!
 	 * \brief Event handler called when the canvas size has changed.
 	 * \param event Size event
 	 */
-	void OnResize(wxSizeEvent& event);
+	void _OnResize(wxSizeEvent& event);
 
 	// original private event handlers
 	/*!
@@ -1021,6 +1031,7 @@ private:
 	 * \sa wxSFCanvasDropTarget
 	 */
 	void _OnDrop(wxCoord x, wxCoord y, wxDragResult def, wxDataObject *data);
+	
 
 	DECLARE_EVENT_TABLE();
 };

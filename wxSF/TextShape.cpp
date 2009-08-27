@@ -32,6 +32,8 @@ wxSFTextShape::wxSFTextShape(void)
 
     m_Fill = *wxTRANSPARENT_BRUSH;
     m_Border = *wxTRANSPARENT_PEN;
+	
+	m_nRectSize = wxRealPoint(0, 0);
 
 	MarkSerializableDataMembers();
 
@@ -39,7 +41,7 @@ wxSFTextShape::wxSFTextShape(void)
 }
 
 wxSFTextShape::wxSFTextShape(const wxRealPoint& pos, const wxString& txt, wxSFDiagramManager* manager)
-: wxSFRectShape(pos, wxRealPoint(1, 1), manager)
+: wxSFRectShape(pos, wxRealPoint(0, 0), manager)
 {
     m_Font = sfdvTEXTSHAPE_FONT;
     m_Font.SetPointSize(12);
@@ -194,21 +196,34 @@ void wxSFTextShape::OnHandle(wxSFShapeHandle& handle)
 wxSize wxSFTextShape::GetTextExtent()
 {
     wxCoord w = -1, h = -1;
-    double wd = -1, hd = -1, d = 0, e = 0;
-
-
     if(m_pParentManager && GetParentCanvas())
     {
         wxClientDC dc((wxWindow*)GetParentCanvas());
 
         // calculate text extent
-
         if( wxSFShapeCanvas::IsGCEnabled() )
         {
             #if wxUSE_GRAPHICS_CONTEXT
-            wxGraphicsContext *pGC = wxGraphicsContext::Create( dc );
+			double wd = -1, hd = -1, d = 0, e = 0;
+
+			wxGraphicsContext *pGC = wxGraphicsContext::Create( dc );
             pGC->SetFont( m_Font, *wxBLACK );
-            pGC->GetTextExtent( m_sText, &wd, &hd, &d, &e );
+			
+			// we must use string tokenizer to inspect all lines of possible multiline text
+			h = 0;
+			wxString sLine;
+			
+			wxStringTokenizer tokens( m_sText, wxT("\n\r"), wxTOKEN_RET_EMPTY );
+			while( tokens.HasMoreTokens() )
+			{
+				sLine = tokens.GetNextToken();
+				pGC->GetTextExtent( sLine, &wd, &hd, &d, &e );
+				
+				h += (hd + e);
+				if( (wd + d) > w ) w = (wd + d);
+			}
+			m_nLineHeight = (hd + e);
+			
             pGC->SetFont( wxNullFont, *wxBLACK );
             #endif
         }
@@ -228,11 +243,11 @@ wxSize wxSFTextShape::GetTextExtent()
         m_nLineHeight = int(m_nRectSize.y/tokens.CountTokens());
     }
 
-    if( wxSFShapeCanvas::IsGCEnabled() )
+    /*if( wxSFShapeCanvas::IsGCEnabled() )
     {
         return wxSize((wxCoord)(wd + d), (wxCoord)(hd + e));
     }
-    else
+    else*/
         return wxSize(w, h);
 }
 

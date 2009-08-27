@@ -20,6 +20,8 @@
 #include "wxsf/ShapeCanvas.h"
 #include "wxsf/CommonFcn.h"
 
+using namespace wxSFCommonFcn;
+
 XS_IMPLEMENT_CLONABLE_CLASS(wxSFRoundRectShape, wxSFRectShape);
 
 wxSFRoundRectShape::wxSFRoundRectShape(void) : wxSFRectShape()
@@ -57,7 +59,7 @@ void wxSFRoundRectShape::MarkSerializableDataMembers()
 // public virtual functions
 //----------------------------------------------------------------------------------//
 
-bool wxSFRoundRectShape::IsInside(const wxPoint &pos)
+bool wxSFRoundRectShape::Contains(const wxPoint &pos)
 {
 	// get original bounding box
 	wxRect shpBB = GetBoundingBox();

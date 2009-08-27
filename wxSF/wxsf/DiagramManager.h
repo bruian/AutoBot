@@ -50,7 +50,7 @@ public:
     /*! \brief Search mode flags for GetShapeAtPosition function */
 	enum SEARCHMODE
 	{
-	    /*! \brief Search for selected shapes only*/
+	    /*! \brief Search for selected shapes only */
 		searchSELECTED,
 		/*! \brief Search for unselected shapes only */
 		searchUNSELECTED,
@@ -67,7 +67,7 @@ public:
 
     // public functions
 	/*! \brief Get wxShapeFramework version number */
-	wxString GetVersion() {return m_sSFVersion;}
+	const wxString& GetVersion() const { return m_sSFVersion; }
 
     /*!
      * \brief Create new direct connection between two shapes.
@@ -121,6 +121,9 @@ public:
 	void RemoveShapes(const ShapeList& selection);
 	/*! \brief Remove all shapes from canvas */
 	void Clear();
+	
+	/*! \brief Update all shapes in the diagram manager */
+	void UpdateAll();
 
     /*!
      * \brief Serialize complete shape canvas to given file
@@ -173,11 +176,11 @@ public:
 	 * \brief Clear shape object acceptance list
 	 * \sa AcceptShape
 	 */
-	void ClearAcceptedShapes(){m_arrAcceptedShapes.Clear();}
+	inline void ClearAcceptedShapes() { m_arrAcceptedShapes.Clear(); }
 	/*!
 	 * \brief Get reference to shape acceptance list
 	 */
-	wxArrayString& GetAcceptedShapes(){return m_arrAcceptedShapes;}
+	inline wxArrayString& GetAcceptedShapes() { return m_arrAcceptedShapes; }
 
     /*!
      * \brief Find shape with given ID.
@@ -190,25 +193,22 @@ public:
 	 * \param parent Pointer to parent shape
 	 * \param shapeInfo Line object type
 	 * \param mode Search mode
-	 * \param lines Reference to shape list where pointers to
-	 * all found connections will be stored
-	 * \return Number of found connections
+	 * \param lines Reference to shape list where pointers to all found connections will be stored
 	 * \sa wxSFShapeBase::CONNECTMODE
 	 */
-	int GetAssignedConnections(wxSFShapeBase* parent, wxClassInfo* shapeInfo, wxSFShapeBase::CONNECTMODE mode, ShapeList& lines);
+	void GetAssignedConnections(wxSFShapeBase* parent, wxClassInfo* shapeInfo, wxSFShapeBase::CONNECTMODE mode, ShapeList& lines);
 	/*!
 	 * \brief Get list of shapes of given type.
 	 * \param shapeInfo Shape object type
-	 * \param shapes Reference to shape list where pointers to
-	 * all found shapes will be stored
-	 * \return Number of found shapes
+	 * \param shapes Reference to shape list where pointers to all found shapes will be stored
+	 * \param mode Search algorithm
+	 * \sa xsSerializable::SEARCHMODE 
 	 */
-	int GetShapes(wxClassInfo* shapeInfo, ShapeList& shapes);
+	void GetShapes(wxClassInfo* shapeInfo, ShapeList& shapes, xsSerializable::SEARCHMODE mode = xsSerializable::searchBFS);
 	/*!
 	 * \brief Get shape at given logical position
 	 * \param pos Logical position
-	 * \param zorder Z-order of searched shape (usefull if several shapes are located
-	 * at the given position)
+	 * \param zorder Z-order of searched shape (usefull if several shapes are located at the given position)
 	 * \param mode Search mode
 	 * \return Pointer to shape if found, otherwise NULL
 	 * \sa SEARCHMODE, wxSFShapeCanvas::DP2LP,, wxSFShapeCanvas::GetShapeUnderCursor
@@ -217,20 +217,16 @@ public:
 	/*!
 	 * \brief Get list of all shapes located at given position
 	 * \param pos Logical position
-	 * \param shapes Reference to shape list where pointers to
-	 * all found shapes will be stored
-	 * \return Number of found shapes
+	 * \param shapes Reference to shape list where pointers to all found shapes will be stored
 	 * \sa wxSFShapeCanvas::DP2LP
 	 */
-	int GetShapesAtPosition(const wxPoint& pos, ShapeList& shapes);
+	void GetShapesAtPosition(const wxPoint& pos, ShapeList& shapes);
 	/*!
 	 * \brief Get list of shapes located inside given rectangle
 	 * \param rct Examined rectangle
-	 * \param shapes Reference to shape list where pointers to
-	 * all found shapes will be stored
-	 * \return Number of found shapes
+	 * \param shapes Reference to shape list where pointers to all found shapes will be stored
 	 */
-	int GetShapesInside(const wxRect& rct, ShapeList& shapes);
+	void GetShapesInside(const wxRect& rct, ShapeList& shapes);
 
     /*!
      * \brief Function finds out whether given shape has some children.
@@ -257,12 +253,12 @@ public:
      * \brief Set associated shape canvas
      * \param canvas Pointer to shape canvas
      */
-    void SetShapeCanvas(wxSFShapeCanvas* canvas){m_pShapeCanvas = canvas;}
+    inline void SetShapeCanvas(wxSFShapeCanvas* canvas) { m_pShapeCanvas = canvas; }
     /*!
      * \brief Get associated shape canvas
      * \return Pointer to shape canvas
      */
-    wxSFShapeCanvas* GetShapeCanvas(){return m_pShapeCanvas;}
+    inline wxSFShapeCanvas* GetShapeCanvas() { return m_pShapeCanvas; }
 
 protected:
 

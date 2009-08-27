@@ -20,8 +20,11 @@
 
 #include "wxsf/DiagramManager.h"
 #include "wxsf/ShapeCanvas.h"
+#include "wxsf/ControlShape.h"
 
 #include "wxsf/CommonFcn.h"
+
+using namespace wxSFCommonFcn;
 
 WX_DEFINE_LIST(IDList);
 
@@ -32,7 +35,7 @@ wxSFDiagramManager::wxSFDiagramManager()
     m_pShapeCanvas = NULL;
     m_lstIDPairs.DeleteContents(true);
 
-    m_sSFVersion =  wxT("1.7.0 beta");
+    m_sSFVersion =  wxT("1.8.0 beta");
 
     SetSerializerOwner(wxT("wxShapeFramework"));
     SetSerializerVersion(wxT("1.0"));
@@ -75,7 +78,9 @@ wxSFShapeBase* wxSFDiagramManager::AddShape(wxClassInfo* shapeInfo, bool saveSta
 
 wxSFShapeBase* wxSFDiagramManager::AddShape(wxClassInfo* shapeInfo, const wxPoint& pos, bool saveState)
 {
-    if( IsShapeAccepted(shapeInfo->GetClassName()) )
+	wxASSERT( shapeInfo );
+	
+    if( shapeInfo && IsShapeAccepted(shapeInfo->GetClassName()) )
     {
         // create shape object from class info
         wxSFShapeBase *pShape = (wxSFShapeBase*)shapeInfo->CreateObject();
@@ -137,7 +142,7 @@ wxSFShapeBase* wxSFDiagramManager::AddShape(wxSFShapeBase* shape, xsSerializable
                     ShapeList lstChildren;
 
                     // get shape's children (if exist)
-                    shape->GetChildShapes(lstChildren, sfRECURSIVE);
+                    shape->GetChildShapes(sfANY, lstChildren, sfRECURSIVE);
                     // initialize shape's children
                     ShapeList::compatibility_iterator node = lstChildren.GetFirst();
                     while(node)
@@ -159,6 +164,12 @@ wxSFShapeBase* wxSFDiagramManager::AddShape(wxSFShapeBase* shape, xsSerializable
                 }
 			}
 
+			// reset scale of assigned shape canvas (if exists and it is necessary...)
+			if( m_pShapeCanvas && shape->IsKindOf( CLASSINFO(wxSFControlShape) ) )
+			{
+				m_pShapeCanvas->SetScale( 1 );
+			}
+			
             if( m_pShapeCanvas )
             {
                 if( saveState )
@@ -210,7 +221,7 @@ void wxSFDiagramManager::RemoveShape(wxSFShapeBase* shape, bool refresh)
         ShapeList lstRemovedConnections;
 
         // get all shape's children
-        shape->GetChildShapes(lstChildren, sfRECURSIVE);
+        shape->GetChildShapes(sfANY, lstChildren, sfRECURSIVE);
         lstChildren.Append(shape);
 
         // retrieve all assigned lines
@@ -234,9 +245,12 @@ void wxSFDiagramManager::RemoveShape(wxSFShapeBase* shape, bool refresh)
 			node = node->GetNext();
 		}
 
+		// remove the shape also from m_lstCurrentShapes list
+		if( m_pShapeCanvas ) m_pShapeCanvas->RemoveFromTemporaries( shape );
+		
         // remove the shape
 		RemoveItem(shape);
-
+		
         if( pParent ) pParent->Update();
 
 		if( refresh && m_pShapeCanvas ) m_pShapeCanvas->Refresh();
@@ -250,7 +264,7 @@ void wxSFDiagramManager::RemoveShapes(const ShapeList& selection)
 	while(node)
 	{
 	    pShape = node->GetData();
-	    // is important to check whether double-linked shapes already exist before
+	    // it is important to check whether double-linked shapes already exist before
 	    // they are deleted
 	    if(Contains(pShape))RemoveShape(pShape, false);
 		node = node->GetNext();
@@ -348,7 +362,7 @@ void wxSFDiagramManager::_DeserializeObjects(xsSerializable* parent, wxXmlNode* 
 	{
 		if(shapeNode->GetName() == wxT("object"))
 		{
-			pShape = AddShape((wxSFShapeBase*)wxCreateDynamicObject(shapeNode->GetPropVal(wxT("type"), wxT(""))), parent, wxDefaultPosition, true, sfDONT_SAVE_STATE);
+			pShape = AddShape((wxSFShapeBase*)wxCreateDynamicObject(shapeNode->GetPropVal(wxT("type"), wxT(""))), parent, wxPoint(0, 0), true, sfDONT_SAVE_STATE);
 			if(pShape)
 			{
 				// store new assigned ID
@@ -397,14 +411,17 @@ bool wxSFDiagramManager::IsShapeAccepted(const wxString& type)
         return false;
 }
 
-int wxSFDiagramManager::GetAssignedConnections(wxSFShapeBase* parent, wxClassInfo* shapeInfo, wxSFShapeBase::CONNECTMODE mode, ShapeList& lines)
+void wxSFDiagramManager::GetAssignedConnections(wxSFShapeBase* parent, wxClassInfo* shapeInfo, wxSFShapeBase::CONNECTMODE mode, ShapeList& lines)
 {
 	wxSFLineShape* pLine;
 
-    ShapeList m_lstLines;
-    if(GetShapes(shapeInfo, m_lstLines))
+	SerializableList lstLines;
+	// lines are children of root item only so we have not to search recursively...
+	GetRootItem()->GetChildren( shapeInfo, lstLines );
+	
+	if( !lstLines.IsEmpty() )
     {
-        ShapeList::compatibility_iterator node = m_lstLines.GetFirst();
+        SerializableList::compatibility_iterator node = lstLines.GetFirst();
         while(node)
         {
             pLine = (wxSFLineShape*)node->GetData();
@@ -426,14 +443,11 @@ int wxSFDiagramManager::GetAssignedConnections(wxSFShapeBase* parent, wxClassInf
             node = node->GetNext();
         }
     }
-
-    return (int)lines.GetCount();
 }
 
-int wxSFDiagramManager::GetShapes(wxClassInfo* shapeInfo, ShapeList& shapes)
+void wxSFDiagramManager::GetShapes(wxClassInfo* shapeInfo, ShapeList& shapes, xsSerializable::SEARCHMODE mode)
 {
-    GetItems(shapeInfo, (SerializableList&)shapes);
-	return (int)shapes.GetCount();
+    GetItems(shapeInfo, (SerializableList&)shapes, mode);
 }
 
 wxSFShapeBase* wxSFDiagramManager::GetShapeAtPosition(const wxPoint& pos, int zorder, SEARCHMODE mode)
@@ -444,7 +458,7 @@ wxSFShapeBase* wxSFDiagramManager::GetShapeAtPosition(const wxPoint& pos, int zo
 
     // sort shapes list in the way that the line shapes will be at the top of the list
     ShapeList shapes;
-    GetShapes(CLASSINFO(wxSFShapeBase), shapes);
+    GetShapes(CLASSINFO(wxSFShapeBase), shapes, xsSerializable::searchBFS);
 
 	ShapeList::compatibility_iterator node = shapes.GetFirst();
 	while(node)
@@ -467,7 +481,7 @@ wxSFShapeBase* wxSFDiagramManager::GetShapeAtPosition(const wxPoint& pos, int zo
 	while(node)
 	{
 		pShape = (wxSFShapeBase*)node->GetData();
-		if(pShape->IsVisible() && pShape->IsActive() && pShape->IsInside(pos))
+		if(pShape->IsVisible() && pShape->IsActive() && pShape->Contains(pos))
 		{
 			switch(mode)
 			{
@@ -502,7 +516,7 @@ wxSFShapeBase* wxSFDiagramManager::GetShapeAtPosition(const wxPoint& pos, int zo
 	return NULL;
 }
 
-int wxSFDiagramManager::GetShapesAtPosition(const wxPoint& pos, ShapeList& shapes)
+void wxSFDiagramManager::GetShapesAtPosition(const wxPoint& pos, ShapeList& shapes)
 {
 	shapes.Clear();
 	wxSFShapeBase *pShape;
@@ -514,14 +528,12 @@ int wxSFDiagramManager::GetShapesAtPosition(const wxPoint& pos, ShapeList& shape
 	while(node)
 	{
 		pShape = node->GetData();
-		if(pShape->IsVisible() && pShape->IsActive() && pShape->IsInside(pos))shapes.Append(pShape);
+		if(pShape->IsVisible() && pShape->IsActive() && pShape->Contains(pos))shapes.Append(pShape);
 		node = node->GetNext();
 	}
-
-	return (int)shapes.GetCount();
 }
 
-int wxSFDiagramManager::GetShapesInside(const wxRect& rct, ShapeList& shapes)
+void wxSFDiagramManager::GetShapesInside(const wxRect& rct, ShapeList& shapes)
 {
 	shapes.Clear();
 	wxSFShapeBase* pShape;
@@ -536,8 +548,6 @@ int wxSFDiagramManager::GetShapesInside(const wxRect& rct, ShapeList& shapes)
 		if(pShape->IsVisible() && pShape->IsActive() && pShape->Intersects(rct))shapes.Append(pShape);
 		node = node->GetNext();
 	}
-
-	return (int)shapes.GetCount();
 }
 
 wxSFShapeBase* wxSFDiagramManager::FindShape(long id)
@@ -621,4 +631,22 @@ void wxSFDiagramManager::UpdateConnections()
 
 	m_lstIDPairs.Clear();
 	m_lstLinesForUpdate.Clear();
+}
+
+void wxSFDiagramManager::UpdateAll()
+{
+	wxSFShapeBase *pShape;
+	
+	ShapeList lstShapes;
+	GetShapes( CLASSINFO(wxSFShapeBase), lstShapes );
+	
+	ShapeList::compatibility_iterator node = lstShapes.GetFirst();
+	while( node )
+	{
+		pShape = node->GetData();
+		// update only shapes withour children because the Update() function is called recursively on all parents
+		if( !HasChildren( pShape ) ) pShape->Update();
+		
+		node = node->GetNext();
+	}
 }

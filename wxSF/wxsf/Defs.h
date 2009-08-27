@@ -11,10 +11,12 @@
     #define WXDLLIMPEXP_SF WXEXPORT
     #define WXDLLIMPEXP_DATA_SF(type) WXEXPORT type
 #elif defined(WXUSINGDLL)
-    #define WXDLLIMPEXP_SF
-    #define WXDLLIMPEXP_DATA_SF(type) type
-//    #define WXDLLIMPEXP_SF WXIMPORT
-//    #define WXDLLIMPEXP_DATA_SF(type) WXIMPORT type
+//bruian modify-begin
+//    #define WXDLLIMPEXP_SF
+//    #define WXDLLIMPEXP_DATA_SF(type) type
+    #define WXDLLIMPEXP_SF WXIMPORT
+    #define WXDLLIMPEXP_DATA_SF(type) WXIMPORT type
+//bruian modify-end
 #else // not making nor using DLL
     #define WXDLLIMPEXP_SF
     #define WXDLLIMPEXP_DATA_SF(type) type

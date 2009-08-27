@@ -11,16 +11,21 @@
 #ifndef _WXSF_H
 #define _WXSF_H
 
+// main library classes
 #include "DiagramManager.h"
 #include "ShapeCanvas.h"
+#include "Thumbnail.h"
 
+// shapes' declarations
 #include "RectShape.h"
 #include "RoundRectShape.h"
 #include "FixedRectShape.h"
 #include "EllipseShape.h"
 #include "CircleShape.h"
 #include "DiamondShape.h"
+//bruian add - begin
 #include "BotShape.h"
+//bruian add - end
 #include "TextShape.h"
 #include "EditTextShape.h"
 #include "BitmapShape.h"
@@ -29,18 +34,27 @@
 #include "GridShape.h"
 #include "FlexGridShape.h"
 
+// arrows' declarations
 #include "OpenArrow.h"
 #include "SolidArrow.h"
+#include "DiamondArrow.h"
+#include "CircleArrow.h"
 
+// connection lines' declarations
 #include "LineShape.h"
 #include "CurveShape.h"
+#include "OrthoShape.h"
 
+// library events
 #include "SFEvents.h"
 
+// printing support
 #include "Printout.h"
 
+// common functions
 #include "CommonFcn.h"
 
+// serialize/deserialize functionality
 #include "../wxxmlserializer/XmlSerializer.h"
 
 #endif //_WXSF_H

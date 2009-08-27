@@ -33,6 +33,8 @@ WX_DEFINE_USER_EXPORTED_ARRAY_INT(int, IntArray, class WXDLLIMPEXP_XS);
 WX_DEFINE_USER_EXPORTED_ARRAY_LONG(long, LongArray, class WXDLLIMPEXP_XS);
 WX_DEFINE_USER_EXPORTED_ARRAY_DOUBLE(double, DoubleArray, class WXDLLIMPEXP_XS);
 
+WX_DECLARE_STRING_HASH_MAP_WITH_DECL(wxString, StringMap, class WXDLLIMPEXP_XS);
+
 /*!
  * \brief Base class encapsulating a property I/O handler. The class is used by
  * the xsSerializable class and is responsiblefor reading and writing of an XML node
@@ -67,8 +69,15 @@ public:
     /*!
      * \brief Get textual representation of current property value.
 	 * \param property Pointer to the source property object
+	 * \return Textual representation of property's value
      */
 	virtual wxString GetValueStr(xsProperty *property){wxUnusedVar(property);return wxT("");}
+    /*!
+     * \brief Set value defined by its textual representation to given property.
+	 * \param property Pointer to the target property object
+	 * \param valstr Textual representation of given value
+     */
+	virtual void SetValueStr(xsProperty *property, const wxString& valstr){wxUnusedVar(property); wxUnusedVar(valstr);}
 
     /*!
      * \brief Create new XML node of given name and value and assign it to the given
@@ -106,7 +115,8 @@ public: \
 	virtual void Read(xsProperty *property, wxXmlNode *source); \
 	virtual void Write(xsProperty *property, wxXmlNode *target); \
 	virtual wxString GetValueStr(xsProperty *property); \
-	static wxString ToString(datatype value); \
+	virtual void SetValueStr(xsProperty *property, const wxString& valstr); \
+	static wxString ToString(const datatype& value); \
 	static datatype FromString(const wxString& value); \
 }; \
 
@@ -127,7 +137,8 @@ public: \
 	virtual void Read(xsProperty *property, wxXmlNode *source); \
 	virtual void Write(xsProperty *property, wxXmlNode *target); \
 	virtual wxString GetValueStr(xsProperty *property); \
-	static wxString ToString(datatype value); \
+	virtual void SetValueStr(xsProperty *property, const wxString& valstr); \
+	static wxString ToString(const datatype& value); \
 	static datatype FromString(const wxString& value); \
 }; \
 
@@ -158,6 +169,11 @@ void name::Write(xsProperty *property, wxXmlNode *target) \
 wxString name::GetValueStr(xsProperty *property) \
 { \
 	return ToString(*((datatype*)property->m_pSourceVariable)); \
+} \
+\
+void name::SetValueStr(xsProperty *property, const wxString& valstr) \
+{ \
+	*((datatype*)property->m_pSourceVariable) = FromString(valstr); \
 } \
 
 /*!
@@ -271,19 +287,24 @@ XS_DECLARE_EXPORTED_IO_HANDLER(RealPointList, xsListRealPointPropIO, WXDLLIMPEXP
  * \brief Property class encapsulating I/O functions used by 'serializabledynamic' (xsSerializable
  * dynamic class objects which are created during the deserialization process) properties.
  */
-XS_DECLARE_EXPORTED_IO_HANDLER(xsSerializable*, xsDynObjPropIO, WXDLLIMPEXP_XS);
+XS_DECLARE_EXPORTED_IO_HANDLER(xsSerializable, xsDynObjPropIO, WXDLLIMPEXP_XS);
 
 /*!
  * \brief Property class encapsulating I/O functions used by 'serializabledynamicnocreate' (already
  * existing xsSerializable dynamic class objects) properties.
  */
-XS_DECLARE_EXPORTED_IO_HANDLER(xsSerializable*, xsDynNCObjPropIO, WXDLLIMPEXP_XS);
+XS_DECLARE_EXPORTED_IO_HANDLER(xsSerializable, xsDynNCObjPropIO, WXDLLIMPEXP_XS);
 
 /*!
  * \brief Property class encapsulating I/O functions used by 'serializablestatic' (static
  * xsSerializable class objects) properties.
  */
 XS_DECLARE_EXPORTED_IO_HANDLER(xsSerializable, xsStaticObjPropIO, WXDLLIMPEXP_XS);
+
+/*!
+ * \brief Property class encapsulating I/O functions used by 'mapstring' (string hash map) properties.
+ */
+XS_DECLARE_EXPORTED_IO_HANDLER(StringMap, xsMapStringPropIO, WXDLLIMPEXP_XS);
 
 WX_DECLARE_HASH_MAP( wxString, xsPropertyIO*, wxStringHash, wxStringEqual, PropertyIOMap );
 

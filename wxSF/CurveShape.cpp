@@ -20,6 +20,8 @@
 #include "wxsf/ShapeCanvas.h"
 #include "wxsf/CommonFcn.h"
 
+using namespace wxSFCommonFcn;
+
 XS_IMPLEMENT_CLONABLE_CLASS(wxSFCurveShape, wxSFLineShape);
 
 wxSFCurveShape::wxSFCurveShape() : wxSFLineShape()

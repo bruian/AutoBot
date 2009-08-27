@@ -20,6 +20,8 @@
 
 // TODO: wxSFShapeBase: Implement LockAspectRation() function
 
+using namespace wxSFCommonFcn;
+
 XS_IMPLEMENT_CLONABLE_CLASS(wxSFRectShape, wxSFShapeBase);
 
 wxSFRectShape::wxSFRectShape(void) : wxSFShapeBase()
@@ -67,7 +69,7 @@ void wxSFRectShape::MarkSerializableDataMembers()
 
 wxRect wxSFRectShape::GetBoundingBox()
 {
-    wxRealPoint apos = GetAbsolutePosition();
+    wxRealPoint apos = this->GetAbsolutePosition();
     return wxRect(wxPoint((int)apos.x, (int)apos.y), wxSize((int)m_nRectSize.x, (int)m_nRectSize.y ));
 }
 
@@ -90,15 +92,16 @@ void wxSFRectShape::FitToChildren()
 
     wxSFShapeBase* pChild;
 
-    // get bounding box of the shape and children set be inside it
-    wxRect chBB = GetBoundingBox();
+    // get bounding box of the shape and children set be inside it	
+	wxRect chBB = this->GetBoundingBox();
+	wxRect shpBB = chBB;
 
     SerializableList::compatibility_iterator node = GetFirstChildNode();
     while(node)
     {
         pChild = (wxSFShapeBase*)node->GetData();
 
-        if( pChild->GetStyle() & sfsALWAYS_INSIDE )
+        if( pChild->ContainsStyle(sfsALWAYS_INSIDE) )
         {
             pChild->GetCompleteBoundingBox(chBB, bbSELF | bbCHILDREN);
         }
@@ -107,7 +110,7 @@ void wxSFRectShape::FitToChildren()
 
 	if(!chBB.IsEmpty())
 	{
-		wxRect shpBB = GetBoundingBox();
+		//wxRect shpBB = this->GetBoundingBox();
 
 		if(!shpBB.Contains(chBB))
 		{
@@ -345,8 +348,10 @@ void wxSFRectShape::OnHandle(wxSFShapeHandle& handle)
 	}
 }
 
-void wxSFRectShape::OnBeginHandle(wxSFShapeHandle& WXUNUSED(handle))
+void wxSFRectShape::OnBeginHandle(wxSFShapeHandle& handle)
 {
+	wxUnusedVar( handle );
+	
     m_nPrevPosition = m_nRelativePosition;
     m_nPrevSize = m_nRectSize;
 }

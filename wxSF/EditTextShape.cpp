@@ -14,10 +14,11 @@
 #define new DEBUG_NEW
 #endif
 
+#include <wx/textctrl.h>
 #include "wxsf/EditTextShape.h"
 #include "wxsf/ShapeCanvas.h"
 
-static int textCtrlId = -1;
+static int textCtrlId = wxNewId();
 
 XS_IMPLEMENT_CLONABLE_CLASS(wxSFEditTextShape, wxSFTextShape);
 
@@ -31,7 +32,7 @@ END_EVENT_TABLE()
 //----------------------------------------------------------------------------------//
 
 wxSFContentCtrl::wxSFContentCtrl(wxWindow* parent, wxWindowID id, wxSFEditTextShape* parentShape, const wxString& content, wxPoint pos, wxSize size, int style)
-: wxTextCtrl(parent, id, content, pos, size, wxTE_PROCESS_ENTER | wxNO_BORDER | style)
+: wxTextCtrl(parent, id, content, pos, size, wxTE_PROCESS_ENTER | wxTE_PROCESS_TAB | wxNO_BORDER | style)
 {
 	m_pParent = parent;
 	m_pParentShape = parentShape;
@@ -52,8 +53,10 @@ wxSFContentCtrl::wxSFContentCtrl(wxWindow* parent, wxWindowID id, wxSFEditTextSh
 	}
 }
 
-void wxSFContentCtrl::OnKillFocus(wxFocusEvent& WXUNUSED(event))
+void wxSFContentCtrl::OnKillFocus(wxFocusEvent& event)
 {
+	wxUnusedVar( event );
+	
 	//Quit();
 }
 
@@ -62,26 +65,38 @@ void wxSFContentCtrl::OnKeyDown(wxKeyEvent& event)
 	switch(event.GetKeyCode())
 	{
 	case WXK_ESCAPE:
+		Quit( sfCANCEL_TEXT_CHANGES );
+		break;
 	case WXK_TAB:
-		Quit();
+		Quit( sfAPPLY_TEXT_CHANGES );
+		break;
+	case WXK_RETURN:
+		// enter new line if SHIFT key was pressed together with the ENTER key
+		if( wxGetKeyState( WXK_SHIFT ) )
+		{
+			event.Skip();
+		}
+		else
+			Quit( sfAPPLY_TEXT_CHANGES );
 		break;
 	default:
 		event.Skip();
 	}
 }
 
-void wxSFContentCtrl::Quit()
+void wxSFContentCtrl::Quit(bool apply)
 {
 	if(m_pParentShape)
 	{
-		m_pParentShape->SetText(GetValue());
 		m_pParentShape->m_pTextCtrl = NULL;
 		m_pParentShape->SetStyle(m_pParentShape->m_nCurrentState);
 
 		// save canvas state if the textctrl content has changed...
-		if(m_sPrevContent != GetValue())
+		if( apply && ( m_sPrevContent != GetValue() ) )
 		{
+			m_pParentShape->SetText(GetValue());
 			m_sPrevContent = GetValue();
+			
 		    // inform parent shape canvas about text change...
             m_pParentShape->GetParentCanvas()->OnTextChange(m_pParentShape);
 		    m_pParentShape->GetParentCanvas()->SaveCanvasState();
@@ -95,6 +110,44 @@ void wxSFContentCtrl::Quit()
 }
 
 //----------------------------------------------------------------------------------//
+// wxSFDetachedContentCtrl control class
+//----------------------------------------------------------------------------------//
+
+wxSFDetachedContentCtrl::wxSFDetachedContentCtrl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxSize( -1,-1 ), wxDefaultSize );
+	
+	wxBoxSizer* mainSizer;
+	mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_pText = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 350,100 ), wxTE_MULTILINE );
+	m_pText->SetMinSize( wxSize( 350,100 ) );
+	
+	mainSizer->Add( m_pText, 1, wxALL|wxEXPAND, 5 );
+	
+	wxStdDialogButtonSizer* buttonSizer;
+	wxButton* buttonSizerOK;
+	wxButton* buttonSizerCancel;
+	buttonSizer = new wxStdDialogButtonSizer();
+	buttonSizerOK = new wxButton( this, wxID_OK );
+	buttonSizer->AddButton( buttonSizerOK );
+	buttonSizerCancel = new wxButton( this, wxID_CANCEL );
+	buttonSizer->AddButton( buttonSizerCancel );
+	buttonSizer->Realize();
+	mainSizer->Add( buttonSizer, 0, wxALIGN_RIGHT|wxBOTTOM|wxRIGHT, 5 );
+	
+	this->SetSizer( mainSizer );
+	this->Layout();
+	mainSizer->Fit( this );
+	
+	this->Centre( wxBOTH );
+}
+
+wxSFDetachedContentCtrl::~wxSFDetachedContentCtrl()
+{
+}
+
+//----------------------------------------------------------------------------------//
 // wxSFEditTextShape shape class
 //----------------------------------------------------------------------------------//
 
@@ -103,8 +156,10 @@ wxSFEditTextShape::wxSFEditTextShape(void)
 {
 	m_pTextCtrl = NULL;
 	m_fForceMultiline = sfdvEDITTEXTSHAPE_FORCEMULTILINE;
+	m_nEditType = sfdvEDITTEXTSHAPE_EDITTYPE;
 
 	XS_SERIALIZE_EX(m_fForceMultiline, wxT("multiline"), sfdvEDITTEXTSHAPE_FORCEMULTILINE);
+	XS_SERIALIZE_INT_EX(m_nEditType, wxT("edittype"), sfdvEDITTEXTSHAPE_EDITTYPE);
 }
 
 wxSFEditTextShape::wxSFEditTextShape(const wxRealPoint& pos, const wxString& txt, wxSFDiagramManager* manager)
@@ -112,8 +167,10 @@ wxSFEditTextShape::wxSFEditTextShape(const wxRealPoint& pos, const wxString& txt
 {
 	m_pTextCtrl = NULL;
 	m_fForceMultiline = sfdvEDITTEXTSHAPE_FORCEMULTILINE;
+	m_nEditType = sfdvEDITTEXTSHAPE_EDITTYPE;
 
 	XS_SERIALIZE_EX(m_fForceMultiline, wxT("multiline"), sfdvEDITTEXTSHAPE_FORCEMULTILINE);
+	XS_SERIALIZE_INT_EX(m_nEditType, wxT("edittype"), sfdvEDITTEXTSHAPE_EDITTYPE);
 }
 
 wxSFEditTextShape::wxSFEditTextShape(const wxSFEditTextShape& obj)
@@ -121,8 +178,10 @@ wxSFEditTextShape::wxSFEditTextShape(const wxSFEditTextShape& obj)
 {
 	m_pTextCtrl = NULL;
 	m_fForceMultiline = obj.m_fForceMultiline;
+	m_nEditType = obj.m_nEditType;
 
 	XS_SERIALIZE_EX(m_fForceMultiline, wxT("multiline"), sfdvEDITTEXTSHAPE_FORCEMULTILINE);
+	XS_SERIALIZE_INT_EX(m_nEditType, wxT("edittype"), sfdvEDITTEXTSHAPE_EDITTYPE);
 }
 
 wxSFEditTextShape::~wxSFEditTextShape(void)
@@ -135,28 +194,60 @@ wxSFEditTextShape::~wxSFEditTextShape(void)
 
 void wxSFEditTextShape::EditLabel()
 {
-	if(GetParentCanvas())
+	if( GetParentCanvas() )
 	{
-	    wxRealPoint shpPos = GetAbsolutePosition();
-		wxRect shpBB = GetBoundingBox();
 		int dx, dy;
-
-		int style = 0;
+		wxRealPoint shpPos = GetAbsolutePosition();
 		double scale = GetParentCanvas()->GetScale();
 		GetParentCanvas()->CalcUnscrolledPosition(0, 0, &dx, &dy);
-
-		if( m_fForceMultiline || m_sText.Contains(wxT("\n")) )
+		
+		switch( m_nEditType )
 		{
-			style = wxTE_MULTILINE;
-			// set minimal control size
+			case editINPLACE:
+			{
+				wxRect shpBB = GetBoundingBox();
+				int style = 0;
+
+				if( m_fForceMultiline || m_sText.Contains(wxT("\n")) )
+				{
+					style = wxTE_MULTILINE;
+					// set minimal control size
+				}
+
+				if( (m_sText == wxEmptyString) || ((style == wxTE_MULTILINE) && (shpBB.GetWidth() < 50)) )shpBB.SetWidth(50);
+
+				m_pTextCtrl = new wxSFContentCtrl(GetParentCanvas(), textCtrlId, this, m_sText, wxPoint(int((shpPos.x * scale) - dx), int((shpPos.y * scale) - dy)), wxSize(int(shpBB.GetWidth() * scale), int(shpBB.GetHeight() * scale)), style);
+
+				m_nCurrentState = GetStyle();
+				RemoveStyle(sfsSIZE_CHANGE);
+			}
+			break;
+			
+			case editDIALOG:
+			{
+				wxString sPrevText = GetText();
+				
+				wxSFDetachedContentCtrl m_pTextDlg( GetParentCanvas() );
+				
+				//m_pTextDlg.Move( wxPoint(int((shpPos.x * scale) - dx), int((shpPos.y * scale) - dy)) );
+				m_pTextDlg.SetContent( sPrevText );
+				
+				if( m_pTextDlg.ShowModal() == wxID_OK )
+				{
+					if( m_pTextDlg.GetContent() != sPrevText )
+					{
+						SetText( m_pTextDlg.GetContent() );
+						
+						GetParentCanvas()->OnTextChange( this );
+						GetParentCanvas()->SaveCanvasState();
+						
+						Update();
+						GetParentCanvas()->Refresh( false );
+					}
+				}
+			}
+			break;
 		}
-
-		if( (m_sText == wxEmptyString) || ((style == wxTE_MULTILINE) && (shpBB.GetWidth() < 50)) )shpBB.SetWidth(50);
-
-		m_pTextCtrl = new wxSFContentCtrl(GetParentCanvas(), textCtrlId, this, m_sText, wxPoint(int((shpPos.x * scale) - dx), int((shpPos.y * scale) - dy)), wxSize(int(shpBB.GetWidth() * scale), int(shpBB.GetHeight() * scale)), style);
-
-		m_nCurrentState = GetStyle();
-		RemoveStyle(sfsSIZE_CHANGE);
 	}
 }
 
@@ -164,9 +255,11 @@ void wxSFEditTextShape::EditLabel()
 // public virtual functions
 //----------------------------------------------------------------------------------//
 
-void wxSFEditTextShape::OnLeftDoubleClick(const wxPoint& WXUNUSED(pos))
+void wxSFEditTextShape::OnLeftDoubleClick(const wxPoint& pos)
 {
 	// HINT: override it if neccessary...
+	
+	wxUnusedVar( pos );
 
     EditLabel();
 }
