@@ -179,7 +179,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".;../include;../src;&quot;$(WXWIN)/include&quot;;&quot;$(WXWIN)/lib/vc_dll/mswud&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WX__;__WXDEBUG__;_WINDOWS;NOPCH;WXUSINGDLL"
+				PreprocessorDefinitions="WXMAKINGDLL_WXSF;WXMAKINGDLL_WXXS;_CRT_SECURE_NO_DEPRECATE;_DISWARNINGS_MSVC;WXUSINGDLL;UNICODE;_UNICODE;__WX__;__WXMSW__;WIN32;_WINDOWS;_DEBUG_MSVC;DEBUG;_DEBUG;__WXDEBUG__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -203,8 +203,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib wsock32.lib winmm.lib wxbase28ud.lib wxmsw28ud_adv.lib wxmsw28ud_aui.lib wxmsw28ud_core.lib wxzlibd.lib"
+				AdditionalDependencies="wxmsw28ud.lib"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
