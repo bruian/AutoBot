@@ -4,6 +4,7 @@
 	Version="9,00"
 	Name="propgrid"
 	ProjectGUID="{110DB50F-7947-4E66-8F5C-B4F378DCBEDD}"
+	RootNamespace="propgrid"
 	TargetFrameworkVersion="0"
 	>
 	<Platforms>
@@ -171,7 +172,7 @@
 			Name="Debug Dll|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -196,7 +197,7 @@
 				AdditionalOptions="/EHsc "
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_dll\mswd&quot;;..\include;..\src"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;__WXMSW__;__WXDEBUG__"
+				PreprocessorDefinitions="WIN32;_USRDLL;DLL_EXPORTS;_DEBUG;__WXMSW__;__WXDEBUG__;WXUSINGDLL;WXMAKINGDLL_PROPGRID"
 				MinimalRebuild="true"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
@@ -221,12 +222,23 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
-				SuppressStartupBanner="true"
+				Name="VCLinkerTool"
+				AdditionalDependencies="wxmsw28ud.lib"
+				OutputFile="$(OutDir)\$(ProjectName)d.dll"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(IntDir)\wxmsw28ud_propgrid_vc_custom.pdb"
+				ProfileGuidedDatabase=""
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				ImportLibrary="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -238,6 +250,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

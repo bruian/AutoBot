@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_AutoBotAction" name="CComponent_AutoBotAction" guid="767FB19B-5F8A-4561-8DFA-4B53547736AE">
+    <category label="lr_AutoBotAction_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m3</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m5</value>
+      </parameter>
+      <parameter name="m_ActionType" label="lr_CAutoBotAction_Type" compile="1" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_start">0</enum>
+          <enum label="lr_stop">1</enum>
+          <!--<enum label="lr_CAutoBotAction_CloseApp">2</enum>-->
+          <value type="number">m1</value>
+        </enumvalue>
+      </parameter>
+      <parameter name="m_BotId" label="lr_CAutoBotAction_IdBot" compile="1" criterion="m1:0">
+        <style>wxStringProperty</style>
+        <value type="string">m2</value>
+      </parameter>
+      <parameter name="m_BotId" label="lr_CAutoBotAction_IdBot" compile="1" criterion="m1:1">
+        <style>wxStringProperty</style>
+        <value type="string">m2</value>
+      </parameter>
+    </category>
+  </object>
+</componentStructure>

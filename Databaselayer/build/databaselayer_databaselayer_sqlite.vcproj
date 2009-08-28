@@ -171,7 +171,7 @@
 			Name="Debug Dll|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -197,7 +197,7 @@
 				AdditionalOptions="/EHsc "
 				Optimization="0"
 				AdditionalIncludeDirectories=".;.\include;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_dll\mswd&quot;;..\Src;..\sqlite;..\include"
-				PreprocessorDefinitions="WIN32;_LIB;__WXDEBUG__;__WXMSW__;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_USRDLL;DLL_EXPORTS;WXUSINGDLL;__WXDEBUG__;__WXMSW__;WXMAKINGDLL_DATABASELAYER;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -221,12 +221,20 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
-				SuppressStartupBanner="true"
+				Name="VCLinkerTool"
+				AdditionalDependencies="wxmsw28ud.lib"
+				OutputFile="$(OutDir)\$(ProjectName)d.dll"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;;.\lib"
+				ProfileGuidedDatabase=""
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				ImportLibrary="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -238,6 +246,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

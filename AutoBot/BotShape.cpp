@@ -16,14 +16,15 @@
 #include "BotShape.h"
 #include "wxsf/ShapeCanvas.h"
 #include "wxsf/CommonFcn.h"
+#include "wxsf/RectShape.h"
 
 #include "res/NoSource.xpm"
 //**************************************************
-XS_IMPLEMENT_CLONABLE_CLASS(wxSFIfShape, wxSFDiamondShape);
-XS_IMPLEMENT_CLONABLE_CLASS(wxSFBotLineShape, wxSFLineShape);
-XS_IMPLEMENT_CLONABLE_CLASS(wxSFTrigger, wxSFRectShape);
-XS_IMPLEMENT_CLONABLE_CLASS(wxSFComponent, wxSFRectShape);
-XS_IMPLEMENT_CLONABLE_CLASS(wxSFCycle, wxSFRectShape);
+//XS_IMPLEMENT_CLONABLE_CLASS(wxSFIfShape, wxSFDiamondShape);
+//XS_IMPLEMENT_CLONABLE_CLASS(wxSFBotLineShape, wxSFLineShape);
+//XS_IMPLEMENT_CLONABLE_CLASS(wxSFTrigger, wxSFRectShape);
+//XS_IMPLEMENT_CLONABLE_CLASS(wxSFComponent, wxSFRectShape);
+//XS_IMPLEMENT_CLONABLE_CLASS(wxSFCycle, wxSFRectShape);
 
 //**************************************************
 //********************Figure IF*********************
@@ -181,17 +182,17 @@ void wxSFIfShape::DrawNormal(wxDC& dc)
 	// HINT: overload it for custom actions...
 	if(m_fRescaleInProgress)
 	{
-		dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(m_nPrevPos));
+		dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(m_nPrevPos));
 
 		dc.SetBrush(*wxTRANSPARENT_BRUSH);
 		dc.SetPen(wxPen(wxColour(100, 100, 100), 1, wxDOT));
-		dc.DrawRectangle(Conv2Point(GetAbsolutePosition()), Conv2Size(m_nRectSize));
+		dc.DrawRectangle(wxSFCommonFcn::Conv2Point(GetAbsolutePosition()), wxSFCommonFcn::Conv2Size(m_nRectSize));
 		dc.SetPen(wxNullPen);
 		dc.SetBrush(wxNullBrush);
 	}
 	else
 	{
-		dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(GetAbsolutePosition()));
+		dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(GetAbsolutePosition()));
 	}
 }
 //**************************************************
@@ -200,11 +201,11 @@ void wxSFIfShape::DrawHover(wxDC& dc)
 	// HINT: overload it for custom actions...
 
 	wxRealPoint pos = GetAbsolutePosition();
-	dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(pos));
+	dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(pos));
 
 	dc.SetPen(wxPen(m_nHoverColor, 1));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(Conv2Point(pos), Conv2Size(m_nRectSize));
+	dc.DrawRectangle(wxSFCommonFcn::Conv2Point(pos), wxSFCommonFcn::Conv2Size(m_nRectSize));
 	dc.SetBrush(wxNullBrush);
 	dc.SetPen(wxNullPen);
 }
@@ -214,11 +215,11 @@ void wxSFIfShape::DrawHighlighted(wxDC& dc)
 	// HINT: overload it for custom actions...
 
 	wxRealPoint pos = GetAbsolutePosition();
-	dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(pos));
+	dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(pos));
 
 	dc.SetPen(wxPen(m_nHoverColor, 2));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(Conv2Point(pos), Conv2Size(m_nRectSize));
+	dc.DrawRectangle(wxSFCommonFcn::Conv2Point(pos), wxSFCommonFcn::Conv2Size(m_nRectSize));
 	dc.SetBrush(wxNullBrush);
 	dc.SetPen(wxNullPen);
 }
@@ -363,7 +364,7 @@ void wxSFBotLineShape::DrawCompleteLine(wxDC& dc)
 						else
 							src = ifShape->GetBorderPoint(false);
 					}
-				dc.DrawLine(Conv2Point(src), Conv2Point(trg));
+					dc.DrawLine(wxSFCommonFcn::Conv2Point(src), wxSFCommonFcn::Conv2Point(trg));
 			}
 
 			// draw target arrow
@@ -388,14 +389,14 @@ void wxSFBotLineShape::DrawCompleteLine(wxDC& dc)
 						else
 							src = ifShape->GetBorderPoint(false);
 					}
-				dc.DrawLine(Conv2Point(src), Conv2Point(trg));
+					dc.DrawLine(wxSFCommonFcn::Conv2Point(src), wxSFCommonFcn::Conv2Point(trg));
 			}
 			// draw unfinished line segment if any (for interactive line creation)
 			dc.SetPen( wxPen(*wxBLACK, 1, wxDOT) );
 
 			if( i )
 			{
-				dc.DrawLine( Conv2Point(trg), m_nUnfinishedPoint );
+				dc.DrawLine( wxSFCommonFcn::Conv2Point(trg), m_nUnfinishedPoint );
 			}
 			else
 			{
@@ -404,12 +405,12 @@ void wxSFBotLineShape::DrawCompleteLine(wxDC& dc)
 					{
 						wxSFIfShape *ifShape = (wxSFIfShape *)pSrcShape;
 						if(GetCondition() == 1)
-							dc.DrawLine( Conv2Point(ifShape->GetBorderPoint(true)), m_nUnfinishedPoint );
+							dc.DrawLine( wxSFCommonFcn::Conv2Point(ifShape->GetBorderPoint(true)), m_nUnfinishedPoint );
 						else
-							dc.DrawLine( Conv2Point(ifShape->GetBorderPoint(false)), m_nUnfinishedPoint );
+							dc.DrawLine( wxSFCommonFcn::Conv2Point(ifShape->GetBorderPoint(false)), m_nUnfinishedPoint );
 					}
 					else
-						dc.DrawLine( Conv2Point(wxRealPoint(pSrcShape->GetBoundingBox().x + pSrcShape->GetBoundingBox().GetWidth() / 2, pSrcShape->GetBoundingBox().GetBottom())), m_nUnfinishedPoint );
+						dc.DrawLine( wxSFCommonFcn::Conv2Point(wxRealPoint(pSrcShape->GetBoundingBox().x + pSrcShape->GetBoundingBox().GetWidth() / 2, pSrcShape->GetBoundingBox().GetBottom())), m_nUnfinishedPoint );
 			}
 			dc.SetPen(wxNullPen);
 		}
@@ -420,7 +421,7 @@ void wxSFBotLineShape::DrawCompleteLine(wxDC& dc)
 			for(i = 1; i <= m_lstPoints.GetCount(); i++)
 			{
 				GetLineSegment( i, src, trg );
-				dc.DrawLine(Conv2Point(src), Conv2Point(trg));
+				dc.DrawLine(wxSFCommonFcn::Conv2Point(src), wxSFCommonFcn::Conv2Point(trg));
 			}
 			// draw linesegment being updated
 			GetLineSegment( 0, src, trg );
@@ -435,7 +436,7 @@ void wxSFBotLineShape::DrawCompleteLine(wxDC& dc)
 				}
 			
 			dc.SetPen(wxPen(*wxBLACK, 1, wxDOT));
-			dc.DrawLine(m_nUnfinishedPoint, Conv2Point(trg));
+			dc.DrawLine(m_nUnfinishedPoint, wxSFCommonFcn::Conv2Point(trg));
 			dc.SetPen(wxNullPen);
 		}
 		break;
@@ -456,14 +457,14 @@ void wxSFBotLineShape::DrawCompleteLine(wxDC& dc)
 							else
 								src = ifShape->GetBorderPoint(false);
 						}
-					dc.DrawLine(Conv2Point(src), Conv2Point(trg));
+						dc.DrawLine(wxSFCommonFcn::Conv2Point(src), wxSFCommonFcn::Conv2Point(trg));
 				}
 			}
 			else
 				trg = GetSrcPoint();
 			// draw linesegment being updated
 			dc.SetPen(wxPen(*wxBLACK, 1, wxDOT));
-			dc.DrawLine( Conv2Point(trg), m_nUnfinishedPoint);
+			dc.DrawLine( wxSFCommonFcn::Conv2Point(trg), m_nUnfinishedPoint);
 			dc.SetPen(wxNullPen);
 		}
 		break;
@@ -496,7 +497,7 @@ wxRealPoint wxSFBotLineShape::GetTrgPoint()
 		if( m_nMode != modeUNDERCONSTRUCTION )
 			GetDirectLine( pt1, pt2 );
 		else
-			pt2 = Conv2RealPoint( m_nUnfinishedPoint );
+			pt2 = wxSFCommonFcn::Conv2RealPoint( m_nUnfinishedPoint );
 			
 		return pt2;
 	}
@@ -560,7 +561,8 @@ void wxSFBotLineShape::OnEndHandle(wxSFShapeHandle& handle)
 
 						wxSFBotLineShape* pLine;
 						ShapeList m_lstLines;
-						if(GetShapeManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines))
+						GetShapeManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines);
+						if(!m_lstLines.IsEmpty())
 						{
 							ShapeList::compatibility_iterator node = m_lstLines.GetFirst();
 							while(node)
@@ -600,8 +602,9 @@ void wxSFBotLineShape::OnEndHandle(wxSFShapeHandle& handle)
 
 						wxSFBotLineShape* pLine;
 						ShapeList m_lstLines;
-
-						if(GetShapeManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines))
+						GetShapeManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines);
+						
+						if(!m_lstLines.IsEmpty())
 						{
 							ShapeList::compatibility_iterator node = m_lstLines.GetFirst();
 							while(node)
@@ -648,7 +651,8 @@ void wxSFBotLineShape::OnEndHandle(wxSFShapeHandle& handle)
 bool wxSFBotLineShape::LineCanConnect(wxSFShapeBase* pShapeUnder)
 {
 	ShapeList m_lstLines;
-	if(!GetShapeManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines))
+	GetShapeManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines);
+	if(m_lstLines.IsEmpty())
 		return true;
 
 	wxSFShapeBase *pSrc = GetShapeManager()->FindShape(GetSrcShapeId());
@@ -886,16 +890,16 @@ void wxSFTrigger::DrawNormal(wxDC& dc)
 	// HINT: overload it for custom actions...
 	if(m_fRescaleInProgress)
 	{
-		dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(m_nPrevPos));
+		dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(m_nPrevPos));
 
 		dc.SetBrush(*wxTRANSPARENT_BRUSH);
 		dc.SetPen(wxPen(wxColour(100, 100, 100), 1, wxDOT));
-		dc.DrawRectangle(Conv2Point(GetAbsolutePosition()), Conv2Size(m_nRectSize));
+		dc.DrawRectangle(wxSFCommonFcn::Conv2Point(GetAbsolutePosition()), wxSFCommonFcn::Conv2Size(m_nRectSize));
 		dc.SetPen(wxNullPen);
 		dc.SetBrush(wxNullBrush);
 	}
 	else
-		dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(GetAbsolutePosition()));
+		dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(GetAbsolutePosition()));
 }
 //**************************************************
 void wxSFTrigger::DrawHover(wxDC& dc)
@@ -903,11 +907,11 @@ void wxSFTrigger::DrawHover(wxDC& dc)
 	// HINT: overload it for custom actions...
 
 	wxRealPoint pos = GetAbsolutePosition();
-	dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(pos));
+	dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(pos));
 
 	dc.SetPen(wxPen(m_nHoverColor, 1));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(Conv2Point(pos), Conv2Size(m_nRectSize));
+	dc.DrawRectangle(wxSFCommonFcn::Conv2Point(pos), wxSFCommonFcn::Conv2Size(m_nRectSize));
 	dc.SetBrush(wxNullBrush);
 	dc.SetPen(wxNullPen);
 }
@@ -917,11 +921,11 @@ void wxSFTrigger::DrawHighlighted(wxDC& dc)
 	// HINT: overload it for custom actions...
 
 	wxRealPoint pos = GetAbsolutePosition();
-	dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(pos));
+	dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(pos));
 
 	dc.SetPen(wxPen(m_nHoverColor, 2));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(Conv2Point(pos), Conv2Size(m_nRectSize));
+	dc.DrawRectangle(wxSFCommonFcn::Conv2Point(pos), wxSFCommonFcn::Conv2Size(m_nRectSize));
 	dc.SetBrush(wxNullBrush);
 	dc.SetPen(wxNullPen);
 }
@@ -1041,16 +1045,16 @@ void wxSFComponent::DrawNormal(wxDC& dc)
 	// HINT: overload it for custom actions...
 	if(m_fRescaleInProgress)
 	{
-		dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(m_nPrevPos));
+		dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(m_nPrevPos));
 
 		dc.SetBrush(*wxTRANSPARENT_BRUSH);
 		dc.SetPen(wxPen(wxColour(100, 100, 100), 1, wxDOT));
-		dc.DrawRectangle(Conv2Point(GetAbsolutePosition()), Conv2Size(m_nRectSize));
+		dc.DrawRectangle(wxSFCommonFcn::Conv2Point(GetAbsolutePosition()), wxSFCommonFcn::Conv2Size(m_nRectSize));
 		dc.SetPen(wxNullPen);
 		dc.SetBrush(wxNullBrush);
 	}
 	else
-		dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(GetAbsolutePosition()));
+		dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(GetAbsolutePosition()));
 }
 //**************************************************
 void wxSFComponent::DrawHover(wxDC& dc)
@@ -1058,11 +1062,11 @@ void wxSFComponent::DrawHover(wxDC& dc)
 	// HINT: overload it for custom actions...
 
 	wxRealPoint pos = GetAbsolutePosition();
-	dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(pos));
+	dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(pos));
 
 	dc.SetPen(wxPen(m_nHoverColor, 1));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(Conv2Point(pos), Conv2Size(m_nRectSize));
+	dc.DrawRectangle(wxSFCommonFcn::Conv2Point(pos), wxSFCommonFcn::Conv2Size(m_nRectSize));
 	dc.SetBrush(wxNullBrush);
 	dc.SetPen(wxNullPen);
 }
@@ -1072,11 +1076,11 @@ void wxSFComponent::DrawHighlighted(wxDC& dc)
 	// HINT: overload it for custom actions...
 
 	wxRealPoint pos = GetAbsolutePosition();
-	dc.DrawBitmap(wxBitmap(m_Image), Conv2Point(pos));
+	dc.DrawBitmap(wxBitmap(m_Image), wxSFCommonFcn::Conv2Point(pos));
 
 	dc.SetPen(wxPen(m_nHoverColor, 2));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(Conv2Point(pos), Conv2Size(m_nRectSize));
+	dc.DrawRectangle(wxSFCommonFcn::Conv2Point(pos), wxSFCommonFcn::Conv2Size(m_nRectSize));
 	dc.SetBrush(wxNullBrush);
 	dc.SetPen(wxNullPen);
 }

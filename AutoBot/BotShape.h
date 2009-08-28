@@ -22,10 +22,10 @@
 #define sfdvCOMPONENTSHAPE_SCALEIMAGE true
 #define sfdvCOMPONENTSHAPE_XPMDATA wxT("")
 //**************************************************
-class WXDLLIMPEXP_SF wxSFIfShape : public wxSFDiamondShape
+class /*WXDLLIMPEXP_SF*/ wxSFIfShape : public wxSFDiamondShape
 {
 public:
-	XS_DECLARE_CLONABLE_CLASS(wxSFIfShape);
+	//XS_DECLARE_CLONABLE_CLASS(wxSFIfShape);
 
 	wxSFIfShape(void);
 	wxSFIfShape(const wxRealPoint& pos, const wxString& imagePath, wxSFDiagramManager* manager);
@@ -73,7 +73,7 @@ private:
 	void MarkSerializableDataMembers();
 };
 //**************************************************
-class WXDLLIMPEXP_SF wxSFBotLineShape : public wxSFLineShape
+class /*WXDLLIMPEXP_SF*/ wxSFBotLineShape : public wxSFLineShape
 {
 public:
 	wxSFBotLineShape::wxSFBotLineShape() 
@@ -93,7 +93,7 @@ public:
 		MarkSerializableDataMembers();
 	}
 
-	XS_DECLARE_CLONABLE_CLASS(wxSFBotLineShape);
+	//XS_DECLARE_CLONABLE_CLASS(wxSFBotLineShape);
 	void GetDirectLine(wxRealPoint& src, wxRealPoint& trg);
 	wxRealPoint GetSrcPoint();
 	wxRealPoint GetTrgPoint();
@@ -113,10 +113,10 @@ private:
 	void MarkSerializableDataMembers();
 };
 //**************************************************
-class WXDLLIMPEXP_SF wxSFTrigger : public wxSFRectShape
+class /*WXDLLIMPEXP_SF*/ wxSFTrigger : public wxSFRectShape
 {
 public:
-	XS_DECLARE_CLONABLE_CLASS(wxSFTrigger);
+	//XS_DECLARE_CLONABLE_CLASS(wxSFTrigger);
 	wxSFTrigger(void);
 	wxSFTrigger(const wxRealPoint& pos, const wxRealPoint& size, const wxString& imagePath, wxSFDiagramManager* manager);
 	wxSFTrigger(const wxSFTrigger& obj);
@@ -155,10 +155,10 @@ private:
 	void MarkSerializableDataMembers();
 };
 //**************************************************
-class WXDLLIMPEXP_SF wxSFComponent : public wxSFRectShape
+class /*WXDLLIMPEXP_SF*/ wxSFComponent : public wxSFRectShape
 {
 public:
-	XS_DECLARE_CLONABLE_CLASS(wxSFComponent);
+	//XS_DECLARE_CLONABLE_CLASS(wxSFComponent);
 	wxSFComponent(void);
 	wxSFComponent(const wxRealPoint& pos, const wxRealPoint& size, const wxString& imagePath, wxSFDiagramManager* manager);
 	wxSFComponent(const wxSFComponent& obj);
@@ -196,10 +196,10 @@ private:
 	void MarkSerializableDataMembers();
 };
 //**************************************************
-class WXDLLIMPEXP_SF wxSFCycle : public wxSFRectShape
+class /*WXDLLIMPEXP_SF*/ wxSFCycle : public wxSFRectShape
 {
 public:
-	XS_DECLARE_CLONABLE_CLASS(wxSFCycle);
+	//XS_DECLARE_CLONABLE_CLASS(wxSFCycle);
 	wxSFCycle(void);
 	wxSFCycle(const wxRealPoint& pos, const wxRealPoint& size, wxSFDiagramManager* manager);
 	wxSFCycle(const wxSFCycle& obj);

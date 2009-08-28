@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_Trigger" name="CComponent_Trigger" guid="FB1AEFD9-37F9-446d-B436-C5E7FD2AD0D3">
+    <category label="lr_Trigger_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="wxString">m1</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="wxString">m2</value>
+      </parameter>
+      <parameter name="m_TriggerType" label="lr_triggertype" compile="0" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_NONElbl">0</enum>
+          <enum label="lr_timer">1</enum>
+          <value type="number">m3</value>
+        </enumvalue>
+      </parameter>
+      <parameter name="m_PeriodSec" label="lr_periodsec" compile="0" criterion="m3:1">
+        <style>wxStringProperty</style>
+        <value type="wxString">m4</value>
+      </parameter>
+      <parameter name="m_OnTimetable" label="lr_ontimetable" compile="0" criterion="">
+        <style>wxBoolProperty</style>
+        <value type="bool">m5</value>
+      </parameter>
+      <parameter name="m_StartRun" label="lr_startrun" compile="0" criterion="">
+        <style>wxBoolProperty</style>
+        <value type="bool">m16</value>
+      </parameter>
+    </category>
+    <category label="lr_startrun" criterion="m16:True">
+      <parameter name="m_DateStart" label="lr_datestart" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="Date">m7</value>
+      </parameter>
+      <parameter name="m_TimeStart" label="lr_timestart" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="Time">m8</value>
+      </parameter>
+    </category>
+    <category label="lr_SettingTimetable" criterion="m5:True">
+      <parameter name="m_Periodicity" label="lr_periodicity" compile="0" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_eachday">0</enum>
+          <enum label="lr_eachweek">1</enum>
+          <enum label="lr_eachmonth">2</enum>
+          <value type="number">m6</value>
+        </enumvalue>
+      </parameter>
+      <category label="lr_eachday" criterion="m6:0">
+        <parameter name="m_OccursDaily" label="lr_occursDaily" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="wxString">m9</value>
+        </parameter>
+      </category>
+      <category label="lr_dailyFrequency" criterion="m6:0">
+        <parameter name="m_EvryN" label="lr_EvryN" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="wxString">m10</value>
+        </parameter>
+        <parameter name="m_TimeUnit" label="lr_TimeUnit" compile="0" criterion="">
+          <style>wxEnumProperty</style>
+          <enumvalue>
+            <enum label="lr_Hour">0</enum>
+            <enum label="lr_Minute">1</enum>
+            <value type="number">m11</value>
+          </enumvalue>
+        </parameter>
+        <parameter name="m_DailyFreqBegin" label="lr_dailyFreqBegin" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="Time">m12</value>
+        </parameter>
+        <parameter name="m_DailyFreqEnd" label="lr_dailyFreqEnd" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="Time">m13</value>
+        </parameter>
+      </category>
+      <category label="lr_eachweek" criterion="m6:1">
+        <parameter name="m_DayOfWeek" label="lr_dayofweek" compile="0" criterion="">
+          <style>wxFlagsProperty</style>
+          <enumvalue>
+            <enum label="lr_monday">2</enum>
+            <enum label="lr_tuesday">4</enum>
+            <enum label="lr_wednesday">8</enum>
+            <enum label="lr_thursday">16</enum>
+            <enum label="lr_friday">32</enum>
+            <enum label="lr_saturday">64</enum>
+            <enum label="lr_sunday">128</enum>
+            <value type="number">m15</value>
+          </enumvalue>
+        </parameter>
+      </category>
+      <category label="lr_dailyFrequency" criterion="m6:1">
+        <parameter name="m_EvryN" label="lr_EvryN" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="wxString">m10</value>
+        </parameter>
+        <parameter name="m_TimeUnit" label="lr_TimeUnit" compile="0" criterion="">
+          <style>wxEnumProperty</style>
+          <enumvalue>
+            <enum label="lr_Hour">0</enum>
+            <enum label="lr_Minute">1</enum>
+            <value type="number">m11</value>
+          </enumvalue>
+        </parameter>
+        <parameter name="m_DailyFreqBegin" label="lr_dailyFreqBegin" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="Time">m12</value>
+        </parameter>
+        <parameter name="m_DailyFreqEnd" label="lr_dailyFreqEnd" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="Time">m13</value>
+        </parameter>
+      </category>
+      <category label="lr_eachmonth" criterion="m6:2">
+        <parameter name="m_Weekly" label="lr_Weekly" compile="0" criterion="">
+          <style>wxFlagsProperty</style>
+          <enumvalue>
+            <enum label="lr_WeekFirst">2</enum>
+            <enum label="lr_WeekSecond">4</enum>
+            <enum label="lr_WeekThird">8</enum>
+            <enum label="lr_WeekFour">16</enum>
+            <enum label="lr_WeekFive">32</enum>
+            <value type="number">m14</value>
+          </enumvalue>
+        </parameter>
+        <parameter name="m_Month" label="lr_Month" compile="0" criterion="">
+          <style>wxFlagsProperty</style>
+          <enumvalue>
+            <enum label="lr_january">2</enum>
+            <enum label="lr_february">4</enum>
+            <enum label="lr_march">8</enum>
+            <enum label="lr_april">16</enum>
+            <enum label="lr_may">32</enum>
+            <enum label="lr_june">64</enum>
+            <enum label="lr_july">128</enum>
+            <enum label="lr_august">256</enum>
+            <enum label="lr_september">512</enum>
+            <enum label="lr_october">1024</enum>
+            <enum label="lr_november">2048</enum>
+            <enum label="lr_december">4096</enum>
+            <value type="number">m17</value>
+          </enumvalue>
+        </parameter>
+        <parameter name="m_DayOfWeek" label="lr_dayofweek" compile="0" criterion="">
+          <style>wxFlagsProperty</style>
+          <enumvalue>
+            <enum label="lr_monday">2</enum>
+            <enum label="lr_tuesday">4</enum>
+            <enum label="lr_wednesday">8</enum>
+            <enum label="lr_thursday">16</enum>
+            <enum label="lr_friday">32</enum>
+            <enum label="lr_saturday">64</enum>
+            <enum label="lr_sunday">128</enum>
+            <value type="number">m15</value>
+          </enumvalue>
+        </parameter>
+      </category>
+      <category label="lr_dailyFrequency" criterion="m6:2">
+        <parameter name="m_EvryN" label="lr_EvryN" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="wxString">m10</value>
+        </parameter>
+        <parameter name="m_TimeUnit" label="lr_TimeUnit" compile="0" criterion="">
+          <style>wxEnumProperty</style>
+          <enumvalue>
+            <enum label="lr_Hour">0</enum>
+            <enum label="lr_Minute">1</enum>
+            <value type="number">m11</value>
+          </enumvalue>
+        </parameter>
+        <parameter name="m_DailyFreqBegin" label="lr_dailyFreqBegin" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="Time">m12</value>
+        </parameter>
+        <parameter name="m_DailyFreqEnd" label="lr_dailyFreqEnd" compile="0" criterion="">
+          <style>wxStringProperty</style>
+          <value type="Time">m13</value>
+        </parameter>
+      </category>
+    </category>
+  </object>
+</componentStructure>

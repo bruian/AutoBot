@@ -67,7 +67,8 @@ using namespace CryptoPP::Weak;
 #include "wx/mstream.h"
 #include "wx/stream.h"
 #include "wx/mimetype.h"
-#include "wx/wxscintilla.h"
+#include "wxscintilla.h"
+
 #include "wx/snglinst.h"
 #include "wx/tipwin.h"
 #include "wx/fs_mem.h"

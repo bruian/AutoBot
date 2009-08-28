@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_Condition" name="CComponent_Condition" guid="FAD5CEC0-9014-438d-9A5D-1B4E4C3C2A55">
+    <category label="lr_Condition_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m1</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m2</value>
+      </parameter>
+      <parameter name="m_Condition" label="lr_condition" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m3</value>
+      </parameter>
+    </category>
+  </object>
+</componentStructure>

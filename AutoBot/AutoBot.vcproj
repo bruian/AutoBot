@@ -222,14 +222,17 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxbase28ud_net.lib wxmsw28ud_aui.lib wxmsw28ud_html.lib wxmsw28ud_adv.lib wxmsw28ud_core.lib wxbase28ud_xml.lib wxbase28ud.lib propgridd.lib databaselayer_sqlited.lib wxscintillad.lib cryptlibd.lib squirreld.lib sqstdlibd.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib winmm.lib advapi32.lib uuid.lib comctl32.lib rpcrt4.lib odbc32.lib iphlpapi.lib ws2_32.lib"
-				LinkIncremental="2"
+				AdditionalDependencies="wxscintillad.lib wxmsw28ud.lib propgridd.lib cryptlibd.lib squirreld.lib sqstdlibd.lib wxSFd.lib winmm.lib advapi32.lib uuid.lib comctl32.lib rpcrt4.lib odbc32.lib iphlpapi.lib ws2_32.lib"
+				LinkIncremental="0"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;;..\lib\vc_dll"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				LargeAddressAware="2"
+				ProfileGuidedDatabase=""
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool

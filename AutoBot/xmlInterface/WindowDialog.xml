@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_WindowDialog" name="CComponent_WindowDialog" guid="B79763EA-0EC4-4EB6-BABF-5BF5BDE05564">
+    <category label="lr_WindowDialog_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m11</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m10</value>
+      </parameter>
+      <parameter name="m_DialogType" label="lr_WindowDialog_DialogType" compile="1" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_WindowDialog_enum_MessageBox">0</enum>
+          <enum label="lr_WindowDialog_enum_InputBox">1</enum>
+          <value type="number">m1</value>
+        </enumvalue>
+      </parameter>
+      <category label="lr_CategoryCriterion" criterion="m1:0">
+        <parameter name="m_DialogStyle" label="lr_WindowDialog_DialogStyle" compile="1" criterion="">
+          <style>wxFlagsProperty</style>
+          <enumvalue>
+            <enum label="lr_YESNO">10</enum>
+            <enum label="lr_CANCEL">16</enum>
+            <enum label="lr_OK">4</enum>
+            <enum label="lr_ICON_EXCLAMATION">256</enum>
+            <enum label="lr_ICON_HAND">512</enum>
+            <enum label="lr_ICON_ERROR">512</enum>
+            <enum label="lr_ICON_QUESTION">1024</enum>
+            <enum label="lr_ICON_INFORMATION">2048</enum>
+            <value type="number">m2</value>
+          </enumvalue>
+        </parameter>
+        <parameter name="m_DialogName" label="lr_WindowDialog_DialogName" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m3</value>
+        </parameter>
+        <parameter name="m_DialogMsg" label="lr_WindowDialog_DlgMsg" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m4</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m1:0">
+        <parameter name="m_ReturnAnswer" label="lr_WindowDialog_ReturnAnswer" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m1:1">
+      </category>
+      <category label="lr_CategoryResult" criterion="m1:1">
+      </category>
+    </category>
+  </object>
+</componentStructure>

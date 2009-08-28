@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_WindowAction" name="CComponent_WindowAction" guid="407501AA-17F9-43ED-964E-868F9C1A5C6C">
+    <category label="lr_WindowAction_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m1</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m2</value>
+      </parameter>
+      <parameter name="m_WinActionType" label="lr_WindowAction_WinActionType" compile="1" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_WindowAction_enum_FindWin">0</enum>
+          <enum label="lr_WindowAction_enum_ManipulateWin">1</enum>
+          <value type="number">m3</value>
+        </enumvalue>
+      </parameter>
+      <category label="lr_CategoryCriterion" criterion="m3:0">
+        <parameter name="m_WindowName" label="lr_WindowAction_WindowName" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m4</value>
+        </parameter>
+        <parameter name="m_FullCorrespond" label="lr_WindowAction_FullCorrespond" compile="1" criterion="">
+          <style>wxBoolProperty</style>
+          <value type="bool">m5</value>
+        </parameter>
+        <parameter name="m_WindowText" label="lr_WindowAction_WindowText" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m6</value>
+        </parameter>
+        <parameter name="m_CriterionPID" label="lr_WindowAction_PID" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+        <parameter name="m_WindowHandle" label="lr_WindowAction_WindowHandle" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m8</value>
+        </parameter>
+        <parameter name="m_WindowClass" label="lr_WindowAction_WindowClass" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m9</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m3:0">
+        <parameter name="m_ResultFind" label="lr_WindowAction_ResultFind" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m10</value>
+        </parameter>
+        <parameter name="m_ResultWindowName" label="lr_WindowAction_WindowName" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m11</value>
+        </parameter>
+        <parameter name="m_ResultWindowText" label="lr_WindowAction_WindowText" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m12</value>
+        </parameter>
+        <parameter name="m_ResultPID" label="lr_WindowAction_PID" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m13</value>
+        </parameter>
+        <parameter name="m_ResultHandle" label="lr_WindowAction_WindowHandle" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m14</value>
+        </parameter>
+        <parameter name="m_ResultHandleParent" label="lr_WindowAction_HandleParentWindow" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m15</value>
+        </parameter>
+        <parameter name="m_ResultClassWindow" label="lr_WindowAction_WindowClass" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m16</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m3:1">
+        <parameter name="m_WindowHandle" label="lr_WindowAction_WindowHandle" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m8</value>
+        </parameter>
+        <parameter name="m_WindowMessage" label="lr_WindowAction_WindowMessage" compile="1" criterion="">
+          <style>wxEnumProperty</style>
+          <enumvalue>
+            <enum label="lr_enum_WMCLICK">0</enum>
+            <enum label="lr_enum_WMLBUTTONDOWN">1</enum>
+            <enum label="lr_enum_WMLBUTTONUP">2</enum>
+            <value type="number">m17</value>
+          </enumvalue>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m3:1">
+      </category>
+    </category>
+  </object>
+</componentStructure>

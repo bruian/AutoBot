@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<canvas>
+  <settings>
+    <object type="wxSFCanvasSettings">
+      <property name="id" type="long">-1</property>
+      <property name="scale" type="double">1.000000</property>
+      <property name="style" type="long">1023</property>
+      <property name="accepted_shapes" type="arraystring">
+        <item>All</item>
+      </property>
+    </object>
+  </settings>
+  <chart>
+    <object type="wxSFTrigger">
+      <property name="id" type="long">1</property>
+      <property name="style" type="long">123</property>
+      <property name="accepted_connections" type="arraystring">
+        <item>All</item>
+      </property>
+      <property name="accepted_trg_neighbours" type="arraystring">
+        <item>All</item>
+      </property>
+      <property name="relative_position" type="realpoint">230.000000,120.000000</property>
+      <property name="size" type="realpoint">110.000000,70.000000</property>
+      <property name="GUID" type="string">45e8aac9-3b34-4620-bca7-e06ee420d5d2</property>
+    </object>
+  </chart>
+</canvas>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_ProcessAction" name="CComponent_ProcessAction" guid="3A7C5246-78D2-4399-BE7F-644CEB4473AE">
+    <category label="lr_ProcessAction_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m11</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m10</value>
+      </parameter>
+      <parameter name="m_ProcessType" label="lr_ProcessAction_ProcessType" compile="1" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_enum_RunProc">0</enum>
+          <enum label="lr_enum_KillProc">1</enum>
+          <enum label="lr_enum_FindProc">2</enum>
+          <value type="number">m1</value>
+        </enumvalue>
+      </parameter>
+      <category label="lr_CategoryCriterion" criterion="m1:0">
+        <parameter name="m_ProgramName" label="lr_ProcessAction_ProgramName" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m2</value>
+        </parameter>
+        <parameter name="m_WaitEndProcess" label="lr_ProcessAction_WaitEndProcess" compile="1" criterion="">
+          <style>wxBoolProperty</style>
+          <value type="bool">m3</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m1:0">
+        <parameter name="m_ReturnPID" label="lr_ProcessAction_ReturnPID" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m4</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m1:1">
+        <parameter name="m_ProgramName" label="lr_ProcessAction_ProgramName" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m2</value>
+        </parameter>
+        <parameter name="m_CriterionPID" label="lr_ProcessAction_CriterionPID" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+        <parameter name="m_MethodEndProcess" label="lr_ProcessAction_MethodEndProcess" compile="1" criterion="">
+          <style>wxEnumProperty</style>
+          <enumvalue>
+            <enum label="lr_ProcessAction_SoftEndProcess">0</enum>
+            <enum label="lr_ProcessAction_HardEndProcess">1</enum>
+            <value type="number">m6</value>
+          </enumvalue>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m1:1">
+        <parameter name="m_ResultOperation" label="lr_ResultOperation" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m1:2">
+        <parameter name="m_ProgramName" label="lr_ProcessAction_ProgramName" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m2</value>
+        </parameter>
+        <parameter name="m_ProcessName" label="lr_ProcessAction_ProcessName" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m8</value>
+        </parameter>
+        <parameter name="m_CriterionPID" label="lr_ProcessAction_CriterionPID" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m1:2">
+        <parameter name="m_ResultOperation" label="lr_ResultOperation" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+        <parameter name="m_HandleTopWindow" label="lr_ProcessAction_HandleTopWindow" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m9</value>
+        </parameter>
+        <parameter name="m_ReturnPID" label="lr_ProcessAction_ReturnPID" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m4</value>
+        </parameter>
+      </category>
+    </category>
+  </object>
+</componentStructure>

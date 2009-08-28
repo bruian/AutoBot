@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_ScriptAction" name="CComponent_ScriptAction" guid="E2ADA6EC-B9F0-4563-A08D-A3E6EFBDF6A3">
+    <category label="lr_ScriptAction_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m1</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m2</value>
+      </parameter>
+      <parameter name="m_ScriptType" label="lr_ScriptAction_ScriptType" compile="1" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_ScriptAction_enum_Squirrel">0</enum>
+          <value type="number">m3</value>
+        </enumvalue>
+      </parameter>
+      <parameter name="m_Script" label="" compile="3" criterion="m3:-1">
+        <style>wxStringProperty</style>
+        <value type="string">m4</value>
+      </parameter>
+    </category>
+  </object>
+</componentStructure>

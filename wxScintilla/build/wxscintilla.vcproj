@@ -17,10 +17,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug Dll|Win32"
-			OutputDirectory=".\Debug"
-			IntermediateDirectory=".\Debug"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="(ConfigurationName)"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -44,8 +43,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_dll\mswd&quot;;..\include;..\src\scintilla\include;..\src\scintilla\src"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;__WXMSW__;__WXDEBUG__;__WX__;SCI_LEXER;LINK_LEXERS"
-				MinimalRebuild="true"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;__WXMSW__;__WXDEBUG__;__WX__;_USRDLL;SCI_LEXER;LINK_LEXERS"
+				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
@@ -70,7 +69,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				OutputFile="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
-				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"

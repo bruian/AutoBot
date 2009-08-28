@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentStructure version="0.1">
+  <object class="CComponent_FileAction" name="CComponent_FileAction" guid="64A880E6-3651-4083-85C5-BD2ECB94B862">
+    <category label="lr_FileAction_categorylbl" criterion="">
+      <parameter name="m_GUID" label="lr_GUID" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m1</value>
+      </parameter>
+      <parameter name="m_Description" label="lr_description" compile="0" criterion="">
+        <style>wxStringProperty</style>
+        <value type="string">m2</value>
+      </parameter>
+      <parameter name="m_FileOperations" label="lr_FileAction_FileOperations" compile="1" criterion="">
+        <style>wxEnumProperty</style>
+        <enumvalue>
+          <enum label="lr_FileAction_enum_Copy">0</enum>
+          <enum label="lr_FileAction_enum_Move">1</enum>
+          <enum label="lr_FileAction_enum_Delete">2</enum>
+          <enum label="lr_FileAction_enum_Create">3</enum>
+          <enum label="lr_FileAction_enum_Exists">4</enum>
+          <enum label="lr_FileAction_enum_Rename">5</enum>
+          <enum label="lr_FileAction_enum_Find">6</enum>
+          <enum label="lr_FileAction_enum_FindNext">7</enum>
+          <value type="number">m3</value>
+        </enumvalue>
+      </parameter>
+      <category label="lr_CategoryCriterion" criterion="m3:0">
+        <parameter name="m_FileRewrite" label="lr_FileAction_Rewrite" compile="1" criterion="">
+          <style>wxBoolProperty</style>
+          <value type="bool">m4</value>
+        </parameter>
+        <parameter name="m_FileFrom" label="lr_FileAction_FileFrom" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+        <parameter name="m_FileTo" label="lr_FileAction_FileTo" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m6</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m3:0">
+        <parameter name="m_ReturnResult" label="lr_FileAction_ReturnResult" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m3:1">
+        <parameter name="m_FileRewrite" label="lr_FileAction_Rewrite" compile="1" criterion="">
+          <style>wxBoolProperty</style>
+          <value type="bool">m4</value>
+        </parameter>
+        <parameter name="m_FileFrom" label="lr_FileAction_FileFrom" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+        <parameter name="m_FileTo" label="lr_FileAction_FileTo" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m6</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m3:1">
+        <parameter name="m_ReturnResult" label="lr_FileAction_ReturnResult" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m3:2">
+        <parameter name="m_FileFrom" label="lr_FileAction_FileFrom" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m3:2">
+        <parameter name="m_ReturnResult" label="lr_FileAction_ReturnResult" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m3:3">
+        <parameter name="m_FileFrom" label="lr_FileAction_FileFrom" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m3:3">
+        <parameter name="m_ReturnResult" label="lr_FileAction_ReturnResult" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryCriterion" criterion="m3:4">
+        <parameter name="m_FileFrom" label="lr_FileAction_FileFrom" compile="1" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m5</value>
+        </parameter>
+      </category>
+      <category label="lr_CategoryResult" criterion="m3:4">
+        <parameter name="m_ReturnResult" label="lr_FileAction_ReturnResult" compile="2" criterion="">
+          <style>wxStringProperty</style>
+          <value type="string">m7</value>
+        </parameter>
+      </category>
+    </category>
+  </object>
+</componentStructure>

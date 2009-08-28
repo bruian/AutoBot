@@ -155,8 +155,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug Dll|Win32"
-			OutputDirectory="../lib/vc_dll"
-			IntermediateDirectory=".objsud"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -207,6 +207,7 @@
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
+				ImportLibrary="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"

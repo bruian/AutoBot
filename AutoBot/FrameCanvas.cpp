@@ -231,7 +231,8 @@ void FrameCanvas::OnLeftDown(wxMouseEvent& event)
 						return;
 					wxSFBotLineShape* pCurentLine = (wxSFBotLineShape*)NULL;
 					ShapeList m_lstLines;
-					if(GetDiagramManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines))
+					GetDiagramManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines);
+					if(!m_lstLines.IsEmpty())
 					{
 						ShapeList::compatibility_iterator ciLines = m_lstLines.GetLast();
 						if( ciLines )
@@ -443,7 +444,8 @@ void FrameCanvas::StartInteractiveConnection(wxClassInfo* shapeInfo, const wxPoi
 		short int siCycle = 0;
 
 		ShapeList m_lstLines;
-		if( GetDiagramManager()->GetShapes(shapeInfo, m_lstLines) )
+		GetDiagramManager()->GetShapes(shapeInfo, m_lstLines);
+		if(!m_lstLines.IsEmpty())
 		{
 			//Получим линию которая в данный момент коннектиться к фигуре
 			ShapeList::compatibility_iterator ciLines = m_lstLines.GetLast();
@@ -534,7 +536,8 @@ void FrameCanvas::OnLeftUp(wxMouseEvent &event)
 	case modeREADY:
 		{
 			ShapeList m_lstLines;
-			if(!GetSelectedShapes(m_lstLines))
+			GetSelectedShapes(m_lstLines);
+			if(m_lstLines.IsEmpty())
 			{
 				wxGetApp().GetAppProperties()->OnProcess(CAppProperties::Event_UnSelectRule, this, (wxEvent *)NULL);
 			}
@@ -577,7 +580,8 @@ void FrameCanvas::OnLeftUp(wxMouseEvent &event)
 					short int siCycle = 0;
 
 					ShapeList m_lstLines;
-					if( GetDiagramManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines) )
+					GetDiagramManager()->GetShapes(CLASSINFO(wxSFBotLineShape), m_lstLines);
+					if(!m_lstLines.IsEmpty())
 					{
 						//Проверим все соединения и попытаемся определить, есть ли подключенные к этому объекту
 						ciLines = m_lstLines.GetFirst();
@@ -702,7 +706,8 @@ void FrameCanvas::OnLeftUp(wxMouseEvent &event)
 				}
 			}
 
-			if(GetSelectedShapes(lstSelection))
+			GetSelectedShapes(lstSelection);
+			if(!lstSelection.IsEmpty())
 			{
 				GetDiagramManager()->GetShapes(CLASSINFO(wxSFBotLineShape), lstLines);
 				ShapeList::compatibility_iterator node = lstLines.GetFirst();
