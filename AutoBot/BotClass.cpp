@@ -440,6 +440,13 @@ void CAppProperties::ApplySettings()
 		wxRemoveFile(filenames);
 	}
 }
+
+const xchar code_1[] = 
+    xSTRING("\
+            myBasic <- CComponent_FileAction.create();  \
+            myBasic.Execute();    \
+    ")
+    ;
 //**************************************************
 bool CAppProperties::LoadPlugIn()
 {
@@ -468,47 +475,55 @@ bool CAppProperties::LoadPlugIn()
 	wxDir dir(strDir);
 	if (!dir.IsOpened())
 		return FALSE;
-
+	
 	//scan for plugins
 	wxString filename;
 	wxString ext = wxT("*.plug");
 	bool cont = dir.GetFirst(&filename, ext, wxDIR_FILES );
-	while ( cont )
+	while( cont )
 	{
-		wxPluginLibrary *lib = wxPluginManager::LoadLibrary(dir.GetName()+wxT("\/")+filename);
-		if(lib)
+		/* явным образом проецируем DLL на адресное пространство нашего процесса */
+		HMODULE hModule = LoadLibrary(dir.GetName()+wxT("\/")+filename);
+		/* проверяем успешность загрузки */
+		_ASSERT(hModule != NULL);
+		/*
+			определяем при помощи typedef новый тип - указатель на вызываемую функцию. 
+			Очень важно знать типы и количество аргументов, а также тип возвращаемого 
+			результата 
+		*/
+		PluginStartupInfo plugInfo;
+		memset(&plugInfo,0,sizeof(PluginStartupInfo));
+
+		//typedef void (*DLLFunctionPtr) (HWND);
+		typedef void (*GetPluginInfoPtr) (struct PluginStartupInfo *);
+		//typedef int (*PGetSum)(const int, const int);
+		//typedef void (*InitClassPtr) (script::VMCore *);
+		/* пытаемся получить адрес функции getSum */
+		//PGetSum pGetSum = (PGetSum)GetProcAddress(hModule, "getSum");
+		
+		GetPluginInfoPtr pProc = (GetPluginInfoPtr)GetProcAddress(hModule, "GetPluginInfo"); 
+		/* проверяем успешность получения адреса */
+		_ASSERT(pProc != NULL);
+
+		(pProc)(&plugInfo);
+		/* выгружаем библиотеку из памяти */
+		//bool b = FreeLibrary(hModule);
+		/* проверяем корректность выгрузки */
+		//_ASSERT(b);
+		CComponent *comp = GetComponent(StrToGuid(plugInfo.ComponentGUID));
+		if(comp)
 		{
-			PluginStartupInfo plsi;
-			wxDYNLIB_FUNCTION(CreatePlugin_function,CreatePlugin,*(lib));
-			if(pfnCreatePlugin)
-			{
-				//Important: Use Detach(), otherwise the DLL will be unloaded once the wxDynamibLibrary object
-				//goes out of scope
-				lib->Detach();
-				
-				Plugin* plugin = pfnCreatePlugin();
-				//call some method in it
-				plugin->GetPluginInfo(&plsi);
-				
-				CComponent *comp = GetComponent(StrToGuid(plsi.ComponentGUID));
-				if(comp)
-				{
-					comp->SetLibrary(lib);
-					comp->SetPlugin(plugin);
-				}
-				else
-				{
-					//delete component
-					//wxDELETE(plugin);
-					//wxDELETE(lib);
-				}
-				//wxDELETE(plugin);
-			}
+			comp->SetLibrary(hModule);
 		}
-		//wxDELETE(lib);
+		else
+		{
+			//delete component
+			bool b = FreeLibrary(hModule);
+			/* проверяем корректность выгрузки */
+			_ASSERT(b);
+		}
 		cont = dir.GetNext(&filename);
 	}
-	
 	return true;
 }
 //**************************************************
@@ -2803,14 +2818,14 @@ void *CBotThread::Entry()
 	while (ciComp)
 	{
 		CComponent *comp = (CComponent *)ciComp->GetData();
-		if(comp->GetPlugin())
-		{
-			comp->GetPlugin()->InitClass(m_Bot->GetVMCore());
-		}
-		else
-		{
+		//if(comp->GetPlugin())
+		//{
+		//	comp->GetPlugin()->InitClass(m_Bot->GetVMCore());
+		//}
+		//else
+		//{
 			comp->Link(m_Bot->GetVMCore());
-		}
+		//}
 		//er->AddMessage(ap->GetLngRes(wxT("lr_BotComponentLinkMsg"))+wxT(" ")+comp->GetName(), CError::eMsgType_BotMsg);
 		ciComp = ciComp->GetNext();
 	}
@@ -4918,6 +4933,19 @@ void CComponent::Link(script::VMCore *ptCore)
 	if(GetGUIDComponent() == wxGetApp().GetAppProperties()->StrToGuid(wxT("767FB19B-5F8A-4561-8DFA-4B53547736AE")))
 	{
 		script::ClassTraits<CAutoBotAction>::bind(ptCore);
+	}
+	
+	if(GetComponentType() == Action)
+	{
+		if(m_Library)
+		{
+			typedef void (*InitClassPtr) (script::VMCore *);
+			/* пытаемся получить адрес функции getSum */
+			InitClassPtr pProc = (InitClassPtr)GetProcAddress(m_Library, "InitClass"); 
+			/* проверяем успешность получения адреса */
+			_ASSERT(pProc != NULL);
+			(pProc)(ptCore);
+		}
 	}
 }
 //**************************************************

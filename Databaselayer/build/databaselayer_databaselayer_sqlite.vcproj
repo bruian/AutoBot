@@ -171,7 +171,7 @@
 			Name="Debug Dll|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -221,20 +221,11 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28ud.lib"
-				OutputFile="$(OutDir)\$(ProjectName)d.dll"
-				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;;.\lib"
-				ProfileGuidedDatabase=""
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				ImportLibrary="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
+				Name="VCLibrarianTool"
+				OutputFile="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -246,9 +237,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

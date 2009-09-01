@@ -222,7 +222,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxscintillad.lib wxmsw28ud.lib propgridd.lib cryptlibd.lib squirreld.lib sqstdlibd.lib wxSFd.lib winmm.lib advapi32.lib uuid.lib comctl32.lib rpcrt4.lib odbc32.lib iphlpapi.lib ws2_32.lib"
+				AdditionalDependencies="wxscintillad.lib databaselayer_sqlited.lib wxmsw28ud.lib propgridd.lib cryptlibd.lib squirreld.lib sqstdlibd.lib wxSFd.lib winmm.lib advapi32.lib uuid.lib comctl32.lib rpcrt4.lib odbc32.lib iphlpapi.lib ws2_32.lib"
 				LinkIncremental="0"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;;..\lib\vc_dll"
 				IgnoreAllDefaultLibraries="false"

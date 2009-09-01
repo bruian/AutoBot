@@ -123,7 +123,7 @@ using namespace CryptoPP::Weak;
 #include "enum.h"
 #include "plugin.h"
 
-class Plugin;
+//class Plugin;
 
 typedef unsigned __int32 u32;
 

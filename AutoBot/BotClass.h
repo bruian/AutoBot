@@ -351,20 +351,23 @@ private:
 	wxString		m_XLSCodegeneration;
 	eComponentType	m_ComponentType;
 	wxImage			m_Image;
-	Plugin			*m_Plugin;
-	wxPluginLibrary	*m_Library;
+	HMODULE			m_Library;
 public:
 	CComponent()
 	{
 		m_XMLStruct = new wxXmlDocument();
-		m_Plugin = (Plugin*)NULL;
-		m_Library = (wxPluginLibrary*)NULL;
+		m_Library = NULL;
 	}
 	~CComponent()
 	{
 		wxDELETE(m_XMLStruct);
-		wxDELETE(m_Plugin);
-		wxDELETE(m_Library);
+		if(m_Library)
+		{
+			/* выгружаем библиотеку из памяти */
+			bool b = FreeLibrary(m_Library);
+			/* проверяем корректность выгрузки */
+			_ASSERT(b);
+		}
 	}
 
 	GUID	 GetGUIDComponent()				{ return m_coGUID; }
@@ -379,10 +382,8 @@ public:
 	void	 SetPath(wxString value)		{ m_Path = value; }
 	eComponentType GetComponentType()		{ return m_ComponentType; }
 	void	 SetComponentType(eComponentType value) { m_ComponentType = value; }
-	Plugin	 *GetPlugin()					{ return m_Plugin; }
-	void	 SetPlugin(Plugin *value)		{ m_Plugin = value; }
-	wxPluginLibrary *GetLibrary()			{ return m_Library; }
-	void	 SetLibrary(wxPluginLibrary *value) { m_Library = value; }
+	HMODULE  GetLibrary()					{ return m_Library; }
+	void	 SetLibrary(HMODULE value)		{ m_Library = value; }
 
 	void Link(script::VMCore *ptCore);
 
