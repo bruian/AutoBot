@@ -17,86 +17,7 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\include;&quot;$(ProjectDir)..\jkBind&quot;;&quot;$(ProjectDir)..\wxSF&quot;;&quot;$(ProjectDir)..\databaselayer\sqlite&quot;;&quot;$(ProjectDir)..\databaselayer\include&quot;;&quot;$(ProjectDir)..\wxScintilla\include&quot;;&quot;$(ProjectDir)..\wxPropgrid\include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;WXUSING_MY_DLL;jkUNICODE=1"
-				MinimalRebuild="true"
-				ExceptionHandling="1"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
-				WarningLevel="4"
-				DebugInformationFormat="4"
-				ShowIncludes="false"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="databaselayer_sqlited.lib wxscintillad.lib cryptlibd.lib wxbase28ud_net.lib propgridd.lib wxmsw28ud_aui.lib wxmsw28ud_html.lib wxmsw28ud_adv.lib wxmsw28ud_core.lib wxbase28ud_xml.lib wxbase28ud.lib squirreld.lib sqstdlibd.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib winmm.lib advapi32.lib uuid.lib comctl32.lib rpcrt4.lib odbc32.lib iphlpapi.lib ws2_32.lib"
-				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;..\lib\vc_lib"
-				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames=""
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				LargeAddressAware="2"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
+			Name="Release Dll|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
@@ -122,10 +43,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\jkBind\thirdparty\squirrel\include&quot;;&quot;$(ProjectDir)..\jkBind\thirdparty\squirrel&quot;;&quot;$(ProjectDir)..\jkBind&quot;;&quot;$(ProjectDir)..\wxSF&quot;;&quot;$(ProjectDir)..\databaselayer\sqlite&quot;;&quot;$(ProjectDir)..\databaselayer\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;jkUNICODE=1"
+				AdditionalIncludeDirectories="..\include;&quot;$(ProjectDir)..\jkBind&quot;;&quot;$(ProjectDir)..\wxSF&quot;;&quot;$(ProjectDir)..\databaselayer\sqlite&quot;;&quot;$(ProjectDir)..\databaselayer\include&quot;;&quot;$(ProjectDir)..\wxScintilla\include&quot;;&quot;$(ProjectDir)..\wxPropgrid\include&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;jkUNICODE=1;WXUSING_MY_DLL;WXUSINGDLL"
 				BasicRuntimeChecks="0"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -142,15 +63,17 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxcode_msw28u_databaselayer_sqlite.lib wxscintillau.lib cryptpp/cryptlib.lib wxbase28u_net.lib wxmsw28u_propgrid.lib wxmsw28u_aui.lib wxmsw28u_html.lib wxmsw28u_adv.lib wxmsw28u_core.lib wxbase28u_xml.lib wxbase28u.lib squirrel.lib sqstdlib.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib winmm.lib advapi32.lib uuid.lib comctl32.lib rpcrt4.lib odbc32.lib iphlpapi.lib ws2_32.lib"
+				AdditionalDependencies="wxscintilla.lib databaselayer_sqlite.lib wxmsw28u.lib propgrid.lib cryptlib.lib squirrel.lib sqstdlib.lib wxSF.lib winmm.lib advapi32.lib uuid.lib comctl32.lib rpcrt4.lib odbc32.lib iphlpapi.lib ws2_32.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\databaselayer\lib\vc_lib&quot;;&quot;$(ProjectDir)..\databaselayer\sqlite\lib&quot;;&quot;$(ProjectDir)..\jkBind\thirdparty\squirrel\include&quot;"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;;..\lib\vc_dll"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="false"
 				SubSystem="2"
 				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -402,15 +325,7 @@
 				RelativePath=".\xmlInterface\Action.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -431,15 +346,7 @@
 				DeploymentContent="true"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -459,15 +366,7 @@
 				RelativePath=".\xmlInterface\Condition.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -487,15 +386,7 @@
 				RelativePath=".\xmlInterface\Cycle.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -515,15 +406,7 @@
 				RelativePath=".\xmlInterface\FileAction.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -543,15 +426,7 @@
 				RelativePath=".\xmlInterface\ProcessAction.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -571,15 +446,7 @@
 				RelativePath=".\ReadMe.txt"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -599,15 +466,7 @@
 				RelativePath=".\SchemeFrame.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -627,15 +486,7 @@
 				RelativePath=".\SchemeFrame.h"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -655,15 +506,7 @@
 				RelativePath=".\xmlInterface\ScriptAction.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -683,15 +526,7 @@
 				RelativePath=".\xmlInterface\Trigger.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -711,15 +546,7 @@
 				RelativePath=".\xmlInterface\WindowAction.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -739,15 +566,7 @@
 				RelativePath=".\xmlInterface\WindowDialog.xml"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool

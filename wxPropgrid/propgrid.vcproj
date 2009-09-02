@@ -16,10 +16,10 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
+			Name="Release Dll|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -42,11 +42,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/EHsc "
-				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswd&quot;;..\include;..\src"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;__WXMSW__;__WXDEBUG__"
-				MinimalRebuild="true"
-				RuntimeLibrary="1"
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_dll\msw&quot;;..\include;..\src"
+				PreprocessorDefinitions="WIN32;_LIB;__WXMSW__;_USRDLL;DLL_EXPORTS;WXUSINGDLL;WXMAKINGDLL_PROPGRID"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough=""
@@ -56,7 +58,6 @@
 				ProgramDataBaseFileName="$(IntDir)\propgrid.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -69,12 +70,18 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)lib\vc_lib\$(ProjectName)d.lib"
-				SuppressStartupBanner="true"
+				Name="VCLinkerTool"
+				AdditionalDependencies="wxmsw28u.lib"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				ImportLibrary="$(SolutionDir)lib\vc_dll\$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -88,81 +95,7 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\..\..\src\propgrid\..\..\..\lib\vc_lib"
-			IntermediateDirectory=".\vc_msw\propgrid"
-			ConfigurationType="4"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/EHsc "
-				Optimization="2"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\src\propgrid\..\..\..\lib\vc_lib\msw,..\..\src\propgrid\..\..\..\include,..\..\src\propgrid\..\..\include"
-				PreprocessorDefinitions="WIN32;_LIB;__WXMSW__"
-				StringPooling="true"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="wx/wxprec.h"
-				PrecompiledHeaderFile="vc_msw\wxprec_propgridlib.pch"
-				AssemblerListingLocation=".\vc_msw\propgrid/"
-				ObjectFile=".\vc_msw\propgrid/"
-				ProgramDataBaseFileName="..\..\src\propgrid\..\..\..\lib\vc_lib\wxmsw28_propgrid.pdb"
-				WarningLevel="4"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="..\..\src\propgrid\..\..\..\lib\vc_lib\wxmsw28_propgrid.lib"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-				SuppressStartupBanner="true"
-				OutputFile=".\..\..\src\propgrid\..\..\..\lib\vc_lib/propgrid.bsc"
-			/>
-			<Tool
-				Name="VCFxCopTool"
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -198,6 +131,7 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_dll\mswd&quot;;..\include;..\src"
 				PreprocessorDefinitions="WIN32;_USRDLL;DLL_EXPORTS;_DEBUG;__WXMSW__;__WXDEBUG__;WXUSINGDLL;WXMAKINGDLL_PROPGRID"
+				IgnoreStandardIncludePath="false"
 				MinimalRebuild="true"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
@@ -293,16 +227,7 @@
 				RelativePath="..\..\..\src\msw\version.rc"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						AdditionalIncludeDirectories="\wxWidgets\src\msw"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+					Name="Release Dll|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
