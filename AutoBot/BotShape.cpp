@@ -20,12 +20,11 @@
 
 #include "res/NoSource.xpm"
 //**************************************************
-//XS_IMPLEMENT_CLONABLE_CLASS(wxSFIfShape, wxSFDiamondShape);
-//XS_IMPLEMENT_CLONABLE_CLASS(wxSFBotLineShape, wxSFLineShape);
-//XS_IMPLEMENT_CLONABLE_CLASS(wxSFTrigger, wxSFRectShape);
-//XS_IMPLEMENT_CLONABLE_CLASS(wxSFComponent, wxSFRectShape);
-//XS_IMPLEMENT_CLONABLE_CLASS(wxSFCycle, wxSFRectShape);
-
+XS_IMPLEMENT_CLONABLE_CLASS(wxSFIfShape, wxSFDiamondShape);
+XS_IMPLEMENT_CLONABLE_CLASS(wxSFBotLineShape, wxSFLineShape);
+XS_IMPLEMENT_CLONABLE_CLASS(wxSFTrigger, wxSFRectShape);
+XS_IMPLEMENT_CLONABLE_CLASS(wxSFComponent, wxSFRectShape);
+XS_IMPLEMENT_CLONABLE_CLASS(wxSFCycle, wxSFRectShape);
 //**************************************************
 //********************Figure IF*********************
 //**************************************************

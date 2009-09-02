@@ -186,6 +186,7 @@
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="wx_pch.h"
+				ProgramDataBaseFileName="$(IntDir)\$(ProjectName)"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
@@ -204,7 +205,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="wxmsw28ud.lib"
+				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_dll&quot;"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(IntDir)\$(ProjectName)"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				ImportLibrary="$(SolutionDir)lib\vc_dll\$(ProjectName)d.lib"
