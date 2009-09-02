@@ -1,0 +1,12 @@
+Compile order in AutoBot.sln:
+1. Squirrel
+2. sqstdlib
+3. Databaselayer
+4. wxPropgrid
+5. wxScintilla
+6. wxSF
+7. wxCryptopp
+8. AutoBot
+
+ver 0.7.00
+1. Исправлен баг возможной утечки памяти в модулец BotClass, функции LoadAppProperties.

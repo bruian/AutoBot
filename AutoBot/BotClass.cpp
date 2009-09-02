@@ -1,8 +1,6 @@
 //Реализация классов Bot приложения
 #include "BotClass.h"
-//#include "plugin.h"
-//IMPLEMENT_ABSTRACT_CLASS(Plugin, wxObject)
-
+//**************************************************
 WX_DEFINE_OBJARRAY(ArrayOfIF);
 WX_DEFINE_OBJARRAY(ArrayOfUNIT);
 WX_DEFINE_OBJARRAY(ArrayOfREL);
@@ -72,9 +70,9 @@ void CError::SetError(bool Error = false, wxString ErrorMsg = wxEmptyString,
 int CError::IsError()
 {
 	if(m_Error)
-	{//Ошибка есть
+	{//Error
 		if(m_FatalError)
-		{//Ошибка фатальная
+		{//Fatal error
 			wxLogFatalError(wxT("%1$s - %2$s"), m_ErrorMsgEnum.Item(m_ErrorType), m_ErrorMsg);
 			return 2;
 		}
@@ -244,7 +242,7 @@ void CError::SaveToDB()
 	wxDELETE(DB);
 }
 //**************************************************
-//Реализация класса CAppProperties
+//Implementing class CAppProperties
 CAppProperties::CAppProperties(wxString path)
 {
 	m_PropertiesDB = new SqliteDatabaseLayer();
@@ -293,7 +291,7 @@ CAppProperties::~CAppProperties()
 void CAppProperties::ApplySettings()
 {
 	HKEY hk;
-	//Настройка авто запуска приложения
+	//Set up auto startup applications
 	wxString exeName = wxGetCwd() + wxT("\\AutoBot.exe");
 	wxString Buf(wxT("Software\\Microsoft\\Windows\\CurrentVersion\\Run")); 
 	if(!RegOpenKeyEx(HKEY_CURRENT_USER, Buf, 0, KEY_WRITE, &hk))
@@ -440,13 +438,6 @@ void CAppProperties::ApplySettings()
 		wxRemoveFile(filenames);
 	}
 }
-
-const xchar code_1[] = 
-    xSTRING("\
-            myBasic <- CComponent_FileAction.create();  \
-            myBasic.Execute();    \
-    ")
-    ;
 //**************************************************
 bool CAppProperties::LoadPlugIn()
 {
@@ -616,14 +607,23 @@ bool CAppProperties::LoadAppProperties()
 				dbResSet->GetResultBlob(7, *(memBufBlobXml));
 				dbResSet->GetResultBlob(10, *(memBufBlobImage));
 				_BytesFile	 = memBufBlobFile->GetBufSize();
+				
+				bool bCont = false;
 				if(_BytesFile == 0)
-					continue;
+					bCont = true;
 				_BytesXml	 = memBufBlobXml->GetBufSize();
 				if(_BytesXml == 0)
-					continue;
+					bCont = true;
 				_BytesImage	 = memBufBlobImage->GetBufSize();
 				if(_BytesImage == 0)
+					bCont = true;
+				if(bCont)
+				{
+					wxDELETE(memBufBlobFile);
+					wxDELETE(memBufBlobXml);
+					wxDELETE(memBufBlobImage);
 					continue;
+				}
 
 				pStatementPropertiesDB = GetPropertiesDB()->PrepareStatement(wxT("SELECT * FROM _RegComponents WHERE _Id = ?"));
 				if(pStatementPropertiesDB)
@@ -670,7 +670,7 @@ bool CAppProperties::LoadAppProperties()
 					else
 					{
 						GetPropertiesDB()->RollBack();
-						continue;
+						bCont = true;;
 					}
 				}
 				wxDELETE(file_output);
@@ -678,6 +678,8 @@ bool CAppProperties::LoadAppProperties()
 				wxDELETE(memBufBlobFile);
 				wxDELETE(memBufBlobXml);
 				wxDELETE(memBufBlobImage);
+				if(bCont)
+					continue;
 			}
 			dbResSet->Close();
 			dbResSet = NULL;
@@ -729,6 +731,15 @@ bool CAppProperties::LoadAppProperties()
 		cont = dir.GetNext(&filename);
 	}
 	wxDELETE(DB);
+	
+	wxArrayString asLibInFolder;
+	ext = wxT("*.plug");
+	cont = dir.GetFirst(&filename, ext, wxDIR_FILES );
+	while( cont )
+	{
+		asLibInFolder.Add(filename);
+		cont = dir.GetNext(&filename);
+	}
 	//Import PLUGIN - end
 
 	//Load app properties
@@ -848,7 +859,10 @@ bool CAppProperties::LoadAppProperties()
 			dbResSet->GetResultBlob(5, *memBuf);
 			_Bytes	 = memBuf->GetBufSize();
 			if(_Bytes == 0)
+			{
+				wxDELETE(memBuf);
 				continue;
+			}
 
 			memIn = new wxMemoryInputStream((const void *)memBuf->GetData(), _Bytes - 1024);
 			switch(_Type)
@@ -862,6 +876,8 @@ bool CAppProperties::LoadAppProperties()
 					if(!ico.IsOk())
 					{
 						wxGetApp().GetError()->SetError(true, wxT("ico"), wxGetApp().GetError()->eErrorType_DB_Image, true);
+						dbResSet->Close();
+						wxDELETE(memBuf);
 						wxDELETE(memIn);
 						wxDELETE(file_output);
 						return false;
@@ -889,6 +905,8 @@ bool CAppProperties::LoadAppProperties()
 						if(!icos.IsOk())
 						{
 							wxGetApp().GetError()->SetError(true, wxT("ico"), wxGetApp().GetError()->eErrorType_DB_Image, true);
+							dbResSet->Close();
+							wxDELETE(memBuf);
 							wxDELETE(memIn);
 							return false;
 						}
@@ -905,6 +923,8 @@ bool CAppProperties::LoadAppProperties()
 					if(!im->IsOk())
 					{
 						wxGetApp().GetError()->SetError(true, wxT("png"), wxGetApp().GetError()->eErrorType_DB_Image, true);
+						dbResSet->Close();
+						wxDELETE(memBuf);
 						wxDELETE(memIn);
 						wxDELETE(im);
 						return false;
@@ -922,6 +942,8 @@ bool CAppProperties::LoadAppProperties()
 					if(!ico.IsOk())
 					{
 						wxGetApp().GetError()->SetError(true, wxT("xpm"), wxGetApp().GetError()->eErrorType_DB_Image, true);
+						dbResSet->Close();
+						wxDELETE(memBuf);
 						wxDELETE(file_output);
 						wxDELETE(memIn);
 						return false;
@@ -940,6 +962,12 @@ bool CAppProperties::LoadAppProperties()
 					file_output->Reset();
 					wxDELETE(file_output);
 					m_SpyCur = wxCursor(wxT("spy.cur"), wxBITMAP_TYPE_CUR);
+					if(!m_SpyCur.IsOk())
+					{
+						dbResSet->Close();
+						wxDELETE(memBuf);
+						return false;
+					}
 					wxRemoveFile(wxT("spy.cur"));
 				}
 				break;
@@ -974,8 +1002,29 @@ bool CAppProperties::LoadAppProperties()
 			_XML_Codegeneration = dbResSet->GetResultString(8);
 			dbResSet->GetResultBlob(9, *memBuf);
 			_Bytes	 = memBuf->GetBufSize();
+
+			bool bcont = false;
 			if(_Bytes == 0)
+				bcont = true;
+			if(!_Path.IsEmpty())
+			{
+				bcont = true;
+				for(size_t i = 0; i < asLibInFolder.Count(); i++)
+				{
+					if(asLibInFolder.Item(i) == _Path.c_str())
+					{
+						bcont = false;
+						break;
+					}
+				}
+			}
+
+			if(bcont)
+			{
+				wxDELETE(memBuf);
+				wxDELETE(memBufXml);
 				continue;
+			}
 			
 			CComponent *comp = new CComponent();
 			comp->SetGUIDComponent(StrToGuid(_SubItem));
@@ -1004,9 +1053,12 @@ bool CAppProperties::LoadAppProperties()
 			if(!im->IsOk())
 			{
 				wxGetApp().GetError()->SetError(true, wxT("png"), wxGetApp().GetError()->eErrorType_DB_Image, true);
+				dbResSet->Close();
 				wxDELETE(im);
+				wxDELETE(memInXml);
 				wxDELETE(memIn);
 				wxDELETE(memBuf);
+				wxDELETE(memBufXml);
 				return false;
 			}
 			comp->SetImage(*im);
@@ -1025,6 +1077,7 @@ bool CAppProperties::LoadAppProperties()
 	catch(DatabaseLayerException & e)
 	{
 		pStatement = NULL;
+		dbResSet->Close();
 		dbResSet = NULL;
 		wxFAIL_MSG(e.GetErrorMessage());
 		return false;

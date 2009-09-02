@@ -443,24 +443,8 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\ReadMe.txt"
+				RelativePath="..\README"
 				>
-				<FileConfiguration
-					Name="Release Dll|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug Dll|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\SchemeFrame.cpp"

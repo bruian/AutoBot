@@ -2,8 +2,8 @@
 #define _AutoBot_h
 
 #define ABV_MAJOR 0
-#define ABV_MINOR 6
-#define ABV_RELEASE 23
+#define ABV_MINOR 7
+#define ABV_RELEASE 00
 
 //#define WIN32_LEAN_AND_MEAN
 //#define _WIN32_WINNT 0x500
